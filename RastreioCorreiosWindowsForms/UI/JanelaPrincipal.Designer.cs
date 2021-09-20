@@ -87,7 +87,7 @@ namespace RastreioCorreiosWindowsForms.UI
             // 
             // bbiPrintPreview
             // 
-            this.bbiPrintPreview.Caption = "Print Preview";
+            this.bbiPrintPreview.Caption = "Imprimir Pré-visualização";
             this.bbiPrintPreview.Id = 14;
             this.bbiPrintPreview.ImageOptions.ImageUri.Uri = "Preview";
             this.bbiPrintPreview.Name = "bbiPrintPreview";
@@ -103,14 +103,14 @@ namespace RastreioCorreiosWindowsForms.UI
             // 
             // bbiEdit
             // 
-            this.bbiEdit.Caption = "Edit";
+            this.bbiEdit.Caption = "Editar";
             this.bbiEdit.Id = 17;
             this.bbiEdit.ImageOptions.ImageUri.Uri = "Edit";
             this.bbiEdit.Name = "bbiEdit";
             // 
             // bbiDelete
             // 
-            this.bbiDelete.Caption = "Delete";
+            this.bbiDelete.Caption = "Deletar";
             this.bbiDelete.Id = 18;
             this.bbiDelete.ImageOptions.ImageUri.Uri = "Delete";
             this.bbiDelete.Name = "bbiDelete";
@@ -156,7 +156,7 @@ namespace RastreioCorreiosWindowsForms.UI
             this.ribbonPageGroup3});
             this.ribbonPage1.MergeOrder = 0;
             this.ribbonPage1.Name = "ribbonPage1";
-            this.ribbonPage1.Text = "Home";
+            this.ribbonPage1.Text = "Início";
             // 
             // ribbonPageGroup1
             // 
