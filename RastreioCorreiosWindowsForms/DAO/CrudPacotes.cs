@@ -26,6 +26,7 @@ namespace RastreioCorreiosWindowsForms.DAO
                         ,DESCRICAO_GERAL
                         ,ULTIMO_PROCESSAMENTO
                         ,CONTEUDO_PACOTE
+                        ,PACOTE_DOS_CLIENTES
                         FROM CORREIOS.RASTREAMENTO_CORREIOS
                         WHERE ENTREGUE = 0
                         ORDER BY ID DESC";

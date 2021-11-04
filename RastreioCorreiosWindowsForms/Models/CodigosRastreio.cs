@@ -14,5 +14,6 @@ namespace RastreioCorreiosWindowsForms.Models
         public bool ENTREGUE { get; set; }
         public DateTime ULTIMO_PROCESSAMENTO { get; set; }
         public string CONTEUDO_PACOTE { get; set; }
+        public bool PACOTE_DOS_CLIENTES { get; set; }
     }
 }

@@ -17,21 +17,29 @@ namespace RastreioCorreiosWindowsForms.BLL
             crudPacotesDao = new CrudPacotes(Helper.DBConnectionOracle);
         }
 
-        public async Task<int> ListarAtualizarPacotes()
+        public async Task ListarAtualizarPacotes()
         {
+            while (true)
+            {
                 var pacotes = crudPacotesDao.GetDadosRastreios();
+
                 foreach (var objeto in pacotes)
                 {
-                var diferncaTempoUltimaAtualizacao = objeto.ULTIMO_PROCESSAMENTO.Subtract(DateTime.Now);
+                    var diferncaTempoUltimaAtualizacao = DateTime.Now.Subtract(objeto.ULTIMO_PROCESSAMENTO);
 
-                if (diferncaTempoUltimaAtualizacao.Minutes < 5)
-                {
-                    continue;
+                    if (diferncaTempoUltimaAtualizacao.TotalMinutes < 5)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        await RastrearPacotes(objeto);
+                    }
                 }
-                await RastrearPacotes(objeto);
-                }
+                Task.Delay(60000);
+            }
 
-                return pacotes.Count();
+           
         }
 
 
@@ -41,7 +49,7 @@ namespace RastreioCorreiosWindowsForms.BLL
             try
             {
                 var result = new Correios.NET.Services().GetPackageTrackingAsync(objeto.CODIGO_RASTREIO).Result;
-                crudPacotesDao.AtualizarDescricaoRastreio(objeto.CODIGO_RASTREIO, result.LastStatus.ToString());
+                crudPacotesDao.AtualizarDescricaoRastreio(objeto.CODIGO_RASTREIO, (result.LastStatus.ToString()));
                 if (result.IsDelivered)
                 {
                     await crudPacotesDao.EncerrarPacoteEntregue(objeto.ID);
