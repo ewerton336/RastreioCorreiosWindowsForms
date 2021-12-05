@@ -71,7 +71,7 @@ namespace RastreioCorreiosWindowsForms.DAO
             var result = await DbConnection.ExecuteAsync(sql, new { ID = idPacote });
         }
 
-        public async void AtualizarDescricaoRastreio(string codRastreio, string descricao)
+        public async Task AtualizarDescricaoRastreio(string codRastreio, string descricao)
         {
             string sql = @"UPDATE CORREIOS.RASTREAMENTO_CORREIOS
                             SET DESCRICAO_GERAL = :DESCRICAO

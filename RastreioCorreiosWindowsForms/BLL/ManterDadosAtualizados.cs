@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Correios.Pacotes.Services;
 using RastreioCorreiosWindowsForms.DAO;
 using RastreioCorreiosWindowsForms.Models;
 
@@ -25,21 +26,11 @@ namespace RastreioCorreiosWindowsForms.BLL
 
                 foreach (var objeto in pacotes)
                 {
-                    var diferncaTempoUltimaAtualizacao = DateTime.Now.Subtract(objeto.ULTIMO_PROCESSAMENTO);
-
-                    if (diferncaTempoUltimaAtualizacao.TotalMinutes < 5)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        await RastrearPacotes(objeto);
-                    }
+                    if (objeto.DESCRICAO_GERAL != null && objeto.DESCRICAO_GERAL.Contains("entregue ao")) continue;
+                    await RastrearPacotes(objeto);
                 }
-                Task.Delay(60000);
+                await Task.Delay(60000);
             }
-
-           
         }
 
 
@@ -48,16 +39,17 @@ namespace RastreioCorreiosWindowsForms.BLL
 
             try
             {
-                var result = new Correios.NET.Services().GetPackageTrackingAsync(objeto.CODIGO_RASTREIO).Result;
-                crudPacotesDao.AtualizarDescricaoRastreio(objeto.CODIGO_RASTREIO, (result.LastStatus.ToString()));
-                if (result.IsDelivered)
-                {
-                    await crudPacotesDao.EncerrarPacoteEntregue(objeto.ID);
-                }
+                Rastreador rastreador = new Rastreador();
+                var pacote =  await rastreador.ObterPacoteAsync(objeto.CODIGO_RASTREIO);
+
+                string descricaoStatusRastreio = pacote.Historico.FirstOrDefault() != null ? pacote.Historico.FirstOrDefault().Localizacao + " " + pacote.Historico.FirstOrDefault().StatusCorreio : pacote.Observacao;
+
+                await crudPacotesDao.AtualizarDescricaoRastreio(objeto.CODIGO_RASTREIO, descricaoStatusRastreio);
+                
             }
             catch (Exception ex)
             {
-                crudPacotesDao.AtualizarDescricaoRastreio(objeto.CODIGO_RASTREIO, ex.InnerException.Message.ToString());
+                await crudPacotesDao.AtualizarDescricaoRastreio(objeto.CODIGO_RASTREIO, ex.InnerException.Message.ToString());
             }
         }
     }
