@@ -18,7 +18,7 @@ namespace RastreioCorreiosWindowsForms.DAO
         }
 
 
-        public IEnumerable<CodigosRastreio> GetDadosRastreios()
+        public async Task < IEnumerable<CodigosRastreio>> GetDadosRastreios()
         {
             var sql = @"SELECT
                         ID
@@ -30,8 +30,7 @@ namespace RastreioCorreiosWindowsForms.DAO
                         FROM CORREIOS.RASTREAMENTO_CORREIOS
                         WHERE ENTREGUE = 0
                         ORDER BY ID DESC";
-
-            var result = DbConnection.Query<CodigosRastreio>(sql);
+            var result = await DbConnection.QueryAsync<CodigosRastreio>(sql);
             return result;
         }
 

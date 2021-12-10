@@ -17,8 +17,6 @@ namespace RastreioCorreiosWindowsForms
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            var teste = new BLL.ManterDadosAtualizados();
-            Task.Run(teste.ListarAtualizarPacotes);
             Application.Run(new UI.JanelaPrincipal());
         }
     }

@@ -22,7 +22,7 @@ namespace RastreioCorreiosWindowsForms.BLL
         {
             while (true)
             {
-                var pacotes = crudPacotesDao.GetDadosRastreios();
+                var pacotes = crudPacotesDao.GetDadosRastreios().Result;
 
                 foreach (var objeto in pacotes)
                 {

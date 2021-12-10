@@ -26,15 +26,17 @@ namespace RastreioCorreiosWindowsForms.UI
 
         private void botaoCadastrar_Click(object sender, EventArgs e)
         {
+             int clienteCheck = checkPacoteClientes.Checked ? 1 : 0;
+              string conteudoPacote = textoDescricao.Text;
             var conteudoCaixaTexto = caixaTexto.Text;
             var rastreios = conteudoCaixaTexto.Split("\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            int clienteCheck = checkPacoteClientes.Checked ? 1 : 0;
+           
             foreach (string rastreio in rastreios)
             {
-                crudPacotes.InserirPacote(rastreio, clienteCheck, "");
-                Close();
-                Task.Run(manterDadosAtualizados.ListarAtualizarPacotes);
+                _ =crudPacotes.InserirPacote(rastreio, clienteCheck, conteudoPacote);
             }
+            Close();
+            Task.Run(manterDadosAtualizados.ListarAtualizarPacotes);
         }
     }
 }

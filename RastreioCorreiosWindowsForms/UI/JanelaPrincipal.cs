@@ -24,14 +24,16 @@ namespace RastreioCorreiosWindowsForms.UI
             crudPacotesDao = new CrudPacotes(RastreioCorreiosWindowsForms.Helper.DBConnectionOracle);
             manterDadosAtualizados = new BLL.ManterDadosAtualizados();
             InitializeComponent();
-            ObterDados();
+            _ = ObterDados();
+            var teste = new BLL.ManterDadosAtualizados();
+            Task.Run(teste.ListarAtualizarPacotes);
         }
 
-        public void ObterDados()
+        public async Task ObterDados()
         {
-            var result = crudPacotesDao.GetDadosRastreios();
-            gridControl.DataSource = result;
-            bsiRecordsCount.Caption = "Registros : " + result.Count();
+                var result = crudPacotesDao.GetDadosRastreios().Result;
+                gridControl.DataSource = result;
+                bsiRecordsCount.Caption = "Registros : " + result.Count();
         }
 
         void bbiPrintPreview_ItemClick(object sender, ItemClickEventArgs e)
@@ -47,8 +49,7 @@ namespace RastreioCorreiosWindowsForms.UI
 
         private void bbiRefresh_ItemClick(object sender, ItemClickEventArgs e)
         {
-            ObterDados();
-            Detalhes.ToString();
+           _ = ObterDados();
         }
 
         private void bbiDelete_ItemClick(object sender, EventArgs e)
@@ -56,7 +57,7 @@ namespace RastreioCorreiosWindowsForms.UI
             GridView gridView = gridControl.FocusedView as GridView;
             var dadosLinhaSelecionada =(Models.CodigosRastreio) gridView.GetRow(gridView.FocusedRowHandle);
             crudPacotesDao.DeletarPacote(dadosLinhaSelecionada.ID);
-            ObterDados();
+            _ = ObterDados();
         }
 
         private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
