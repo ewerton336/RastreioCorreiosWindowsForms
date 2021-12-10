@@ -29,3 +29,6 @@ mais pacotes aguardando retirada, tendo que retornar lá nos correios novamente 
 <img src="https://i.imgur.com/TumgOh9.png"></img>
 
 
+
+
+<img src="https://i.imgur.com/5LjroVk.gif"></img>
