@@ -27,8 +27,9 @@ namespace RastreioCorreiosWindowsForms.DAO
                         ,ULTIMO_PROCESSAMENTO
                         ,CONTEUDO_PACOTE
                         ,PACOTE_DOS_CLIENTES
+                        ,ENTREGUE
                         FROM CORREIOS.RASTREAMENTO_CORREIOS
-                        WHERE ENTREGUE = 0
+                        --WHERE ENTREGUE = 0
                         ORDER BY ID DESC";
             var result = await DbConnection.QueryAsync<CodigosRastreio>(sql);
             return result;

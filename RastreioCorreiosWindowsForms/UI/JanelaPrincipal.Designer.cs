@@ -29,7 +29,6 @@ namespace RastreioCorreiosWindowsForms.UI
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JanelaPrincipal));
             this.ribbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.bbiPrintPreview = new DevExpress.XtraBars.BarButtonItem();
@@ -44,19 +43,17 @@ namespace RastreioCorreiosWindowsForms.UI
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.bsiRecordsCount = new DevExpress.XtraBars.BarStaticItem();
-            this.behaviorManager1 = new DevExpress.Utils.Behaviors.BehaviorManager(this.components);
+            this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.ID = new DevExpress.XtraGrid.Columns.GridColumn();
             this.Rastreio = new DevExpress.XtraGrid.Columns.GridColumn();
             this.Detalhes = new DevExpress.XtraGrid.Columns.GridColumn();
             this.ConteudoPacote = new DevExpress.XtraGrid.Columns.GridColumn();
             this.UltimoProcessamento = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.Entregue = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridControl = new DevExpress.XtraGrid.GridControl();
-            this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl)).BeginInit();
             this.SuspendLayout();
@@ -82,7 +79,6 @@ namespace RastreioCorreiosWindowsForms.UI
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.Office2013;
             this.ribbonControl.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.False;
             this.ribbonControl.Size = new System.Drawing.Size(1068, 162);
-            this.ribbonControl.StatusBar = this.ribbonStatusBar;
             this.ribbonControl.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             // 
             // bbiPrintPreview
@@ -185,19 +181,18 @@ namespace RastreioCorreiosWindowsForms.UI
             this.ribbonPageGroup3.Name = "ribbonPageGroup3";
             this.ribbonPageGroup3.Text = "ribbonPageGroup3";
             // 
-            // ribbonStatusBar
-            // 
-            this.ribbonStatusBar.ItemLinks.Add(this.bsiRecordsCount);
-            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 623);
-            this.ribbonStatusBar.Name = "ribbonStatusBar";
-            this.ribbonStatusBar.Ribbon = this.ribbonControl;
-            this.ribbonStatusBar.Size = new System.Drawing.Size(1068, 26);
-            // 
             // bsiRecordsCount
             // 
             this.bsiRecordsCount.Caption = "Registros: 0";
             this.bsiRecordsCount.Id = 15;
             this.bsiRecordsCount.Name = "bsiRecordsCount";
+            // 
+            // barButtonItem2
+            // 
+            this.barButtonItem2.Caption = "Print Preview";
+            this.barButtonItem2.Id = 14;
+            this.barButtonItem2.ImageOptions.ImageUri.Uri = "Preview";
+            this.barButtonItem2.Name = "barButtonItem2";
             // 
             // gridView
             // 
@@ -207,10 +202,12 @@ namespace RastreioCorreiosWindowsForms.UI
             this.Rastreio,
             this.Detalhes,
             this.ConteudoPacote,
-            this.UltimoProcessamento});
+            this.UltimoProcessamento,
+            this.Entregue});
             this.gridView.GridControl = this.gridControl;
             this.gridView.Name = "gridView";
             this.gridView.OptionsBehavior.ReadOnly = true;
+            this.gridView.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.gridView_RowCellStyle);
             // 
             // ID
             // 
@@ -259,6 +256,14 @@ namespace RastreioCorreiosWindowsForms.UI
             this.UltimoProcessamento.VisibleIndex = 4;
             this.UltimoProcessamento.Width = 168;
             // 
+            // Entregue
+            // 
+            this.Entregue.Caption = "Entregue";
+            this.Entregue.FieldName = "ENTREGUE";
+            this.Entregue.Name = "Entregue";
+            this.Entregue.Visible = true;
+            this.Entregue.VisibleIndex = 5;
+            // 
             // gridControl
             // 
             this.gridControl.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -271,26 +276,18 @@ namespace RastreioCorreiosWindowsForms.UI
             this.gridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
             // 
-            // barButtonItem2
-            // 
-            this.barButtonItem2.Caption = "Print Preview";
-            this.barButtonItem2.Id = 14;
-            this.barButtonItem2.ImageOptions.ImageUri.Uri = "Preview";
-            this.barButtonItem2.Name = "barButtonItem2";
-            // 
             // JanelaPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1068, 649);
-            this.Controls.Add(this.ribbonStatusBar);
             this.Controls.Add(this.gridControl);
             this.Controls.Add(this.ribbonControl);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "JanelaPrincipal";
             this.Ribbon = this.ribbonControl;
-            this.StatusBar = this.ribbonStatusBar;
+            this.Text = "Rastreamento de Pacotes - Ewerton Guimarães";
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl)).EndInit();
             this.ResumeLayout(false);
@@ -308,20 +305,19 @@ namespace RastreioCorreiosWindowsForms.UI
         private DevExpress.XtraBars.BarButtonItem bbiEdit;
         private DevExpress.XtraBars.BarButtonItem bbiDelete;
         private DevExpress.XtraBars.BarButtonItem bbiRefresh;
-        private DevExpress.Utils.Behaviors.BehaviorManager behaviorManager1;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView;
-        private DevExpress.XtraGrid.Columns.GridColumn ID;
-        private DevExpress.XtraGrid.Columns.GridColumn Rastreio;
-        private DevExpress.XtraGrid.Columns.GridColumn Detalhes;
-        private DevExpress.XtraGrid.GridControl gridControl;
         private DevExpress.XtraBars.BarButtonItem barButtonItem1;
         private DevExpress.XtraBars.BarButtonItem barButtonItem3;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
         private DevExpress.XtraBars.BarButtonItem barButtonItem2;
-        private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar;
         private DevExpress.XtraBars.BarStaticItem bsiRecordsCount;
         private DevExpress.XtraBars.BarButtonItem barButtonItem4;
-        private DevExpress.XtraGrid.Columns.GridColumn UltimoProcessamento;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView;
+        private DevExpress.XtraGrid.Columns.GridColumn ID;
+        private DevExpress.XtraGrid.Columns.GridColumn Rastreio;
+        private DevExpress.XtraGrid.Columns.GridColumn Detalhes;
         private DevExpress.XtraGrid.Columns.GridColumn ConteudoPacote;
+        private DevExpress.XtraGrid.Columns.GridColumn UltimoProcessamento;
+        private DevExpress.XtraGrid.Columns.GridColumn Entregue;
+        private DevExpress.XtraGrid.GridControl gridControl;
     }
 }

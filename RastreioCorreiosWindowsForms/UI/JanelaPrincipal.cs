@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using RastreioCorreiosWindowsForms.DAO;
 using DevExpress.XtraGrid.Views.Grid;
+using RastreioCorreiosWindowsForms.Models;
 
 namespace RastreioCorreiosWindowsForms.UI
 {
@@ -25,17 +26,25 @@ namespace RastreioCorreiosWindowsForms.UI
             manterDadosAtualizados = new BLL.ManterDadosAtualizados();
             InitializeComponent();
             _ = ObterDados();
-            var teste = new BLL.ManterDadosAtualizados();
-            Task.Run(teste.ListarAtualizarPacotes);
+           _ =  manterDadosAtualizados.ListarAtualizarPacotes();
         }
 
         public async Task ObterDados()
         {
-                var result = crudPacotesDao.GetDadosRastreios().Result;
-                gridControl.DataSource = result;
-                bsiRecordsCount.Caption = "Registros : " + result.Count();
+            var pacotes = crudPacotesDao.GetDadosRastreios().Result;
+            gridControl.DataSource = pacotes;
+          
+            foreach (var pacote in pacotes)
+            {
+                if (pacote.ENTREGUE == false && pacote.DESCRICAO_GERAL != null && pacote.DESCRICAO_GERAL.Contains("entregue ao"))
+                {
+                    _ = crudPacotesDao.EncerrarPacoteEntregue(pacote.ID);
+                }
+            }
         }
 
+
+   
         void bbiPrintPreview_ItemClick(object sender, ItemClickEventArgs e)
         {
             gridControl.ShowRibbonPrintPreview();
@@ -49,13 +58,13 @@ namespace RastreioCorreiosWindowsForms.UI
 
         private void bbiRefresh_ItemClick(object sender, ItemClickEventArgs e)
         {
-           _ = ObterDados();
+            _ = ObterDados();
         }
 
         private void bbiDelete_ItemClick(object sender, EventArgs e)
         {
             GridView gridView = gridControl.FocusedView as GridView;
-            var dadosLinhaSelecionada =(Models.CodigosRastreio) gridView.GetRow(gridView.FocusedRowHandle);
+            var dadosLinhaSelecionada = (Models.CodigosRastreio)gridView.GetRow(gridView.FocusedRowHandle);
             crudPacotesDao.DeletarPacote(dadosLinhaSelecionada.ID);
             _ = ObterDados();
         }
@@ -75,6 +84,15 @@ namespace RastreioCorreiosWindowsForms.UI
             ObterDados();
         }
 
-      
+        private void gridView_RowCellStyle(object sender, RowCellStyleEventArgs e)
+        {
+            var view = sender as GridView;
+            var dadosLinha = (CodigosRastreio)view.GetRow(e.RowHandle);
+            if (dadosLinha.DESCRICAO_GERAL != null && dadosLinha.DESCRICAO_GERAL.Contains("aguardando retirada"))
+            {
+                e.Appearance.BackColor = Color.Salmon;
+            }
+
+        }
     }
 }

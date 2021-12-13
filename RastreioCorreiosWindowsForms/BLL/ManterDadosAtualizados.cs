@@ -26,17 +26,19 @@ namespace RastreioCorreiosWindowsForms.BLL
 
                 foreach (var objeto in pacotes)
                 {
-                    if (objeto.DESCRICAO_GERAL != null && objeto.DESCRICAO_GERAL.Contains("entregue ao")) continue;
+                    if (objeto.ENTREGUE == true) continue;
+                    var teste = DateTime.Now.Subtract(objeto.ULTIMO_PROCESSAMENTO);
+                    if (teste.Minutes < 3) continue;
+
+                    //if (objeto.DESCRICAO_GERAL != null && objeto.DESCRICAO_GERAL.Contains("entregue ao")) continue;
                     await RastrearPacotes(objeto);
                 }
                 await Task.Delay(60000);
             }
         }
 
-
         public async Task RastrearPacotes(CodigosRastreio objeto)
         {
-
             try
             {
                 Rastreador rastreador = new Rastreador();
@@ -44,16 +46,12 @@ namespace RastreioCorreiosWindowsForms.BLL
 
                 string descricaoStatusRastreio = pacote.Historico.FirstOrDefault() != null ? pacote.Historico.FirstOrDefault().Localizacao + " " + pacote.Historico.FirstOrDefault().StatusCorreio : pacote.Observacao;
 
-                await crudPacotesDao.AtualizarDescricaoRastreio(objeto.CODIGO_RASTREIO, descricaoStatusRastreio);
-                
+                await crudPacotesDao.AtualizarDescricaoRastreio(objeto.CODIGO_RASTREIO, descricaoStatusRastreio);  
             }
             catch (Exception ex)
             {
-                await crudPacotesDao.AtualizarDescricaoRastreio(objeto.CODIGO_RASTREIO, ex.InnerException.Message.ToString());
+                await crudPacotesDao.AtualizarDescricaoRastreio(objeto.CODIGO_RASTREIO, ex.Message.ToString());
             }
         }
     }
-
-
-
 }
