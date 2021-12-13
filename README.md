@@ -8,7 +8,7 @@
 e assim eu tenho que retirar no centro da cidade. Muitas vezes eu ia buscar, mas os sistemas de acompanhamento que eu utilizava demoravam para atualizar, e eu não sabia que tinham
 mais pacotes aguardando retirada, tendo que retornar lá nos correios novamente no dia seguinte :( <p>
 
-<p> Para produzir esse programa, utilizei .net Framework e Banco de dados Oracle. Futuramente para que todos possam utilizar, pretendo Utilizar com MySQL. <p>
+<p> Para produzir esse programa, utilizei .net Framework e Banco de dados Oracle. Futuramente para que todos possam utilizar, pretendo Utilizar com MySQL ou SQlite. <p>
 
 <p> Caso você tenha alguma sugestão a dar, fique a vontade! Estou apto a receber críticas :D<p>
 
@@ -29,3 +29,6 @@ mais pacotes aguardando retirada, tendo que retornar lá nos correios novamente 
 <img src="https://i.imgur.com/TumgOh9.png"></img>
 
 
+
+
+<img src="https://i.imgur.com/5LjroVk.gif"></img>
