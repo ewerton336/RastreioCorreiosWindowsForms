@@ -28,7 +28,7 @@ namespace RastreioCorreiosWindowsForms.BLL
                 {
                     if (objeto.ENTREGUE == true) continue;
                     var teste = DateTime.Now.Subtract(objeto.ULTIMO_PROCESSAMENTO);
-                    if (teste.Minutes < 3) continue;
+                    if (teste.TotalMinutes < 3) continue;
 
                     //if (objeto.DESCRICAO_GERAL != null && objeto.DESCRICAO_GERAL.Contains("entregue ao")) continue;
                     await RastrearPacotes(objeto);
