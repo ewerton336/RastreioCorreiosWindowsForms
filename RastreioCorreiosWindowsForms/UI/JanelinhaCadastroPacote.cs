@@ -25,7 +25,7 @@ namespace RastreioCorreiosWindowsForms.UI
                 var dados = textBox1.Text;
                 string conteudoPacote = textBox2.Text;
                 int clienteCheck = checkCliente.Checked ? 1 : 0;
-                var cadastro = new DAO.CrudPacotes(RastreioCorreiosWindowsForms.Helper.DBConnectionOracle).InserirPacote(dados, clienteCheck, conteudoPacote);
+                var cadastro = new DAO.CrudPacotes(RastreioCorreiosWindowsForms.Helper.DBConnectionSql).InserirPacote(dados, clienteCheck, conteudoPacote);
                 if (cadastro.Result == 0)
                 {
                     XtraMessageBox.Show("O pacote não foi cadastrado pois já existe um idêntico no banco de dados.");

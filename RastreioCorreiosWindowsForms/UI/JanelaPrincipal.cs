@@ -22,29 +22,46 @@ namespace RastreioCorreiosWindowsForms.UI
         private readonly BLL.ManterDadosAtualizados manterDadosAtualizados;
         public JanelaPrincipal()
         {
-            crudPacotesDao = new CrudPacotes(RastreioCorreiosWindowsForms.Helper.DBConnectionOracle);
-            manterDadosAtualizados = new BLL.ManterDadosAtualizados();
             InitializeComponent();
-            _ = ObterDados();
-           _ =  manterDadosAtualizados.ListarAtualizarPacotes();
+            //aparecer tela de carregando ao iniciar programa
+            if (!splashTelaCarregando.IsSplashFormVisible)
+            {
+                splashTelaCarregando.ShowWaitForm();
+                splashTelaCarregando.SetWaitFormDescription("Inicializando Programa...");
+            }
+            crudPacotesDao = new CrudPacotes(RastreioCorreiosWindowsForms.Helper.DBConnectionSql);
+            manterDadosAtualizados = new BLL.ManterDadosAtualizados();
+
+            Task task = ObterDados();
+            Task task2 = manterDadosAtualizados.ListarAtualizarPacotes();
+            if (splashTelaCarregando.IsSplashFormVisible) splashTelaCarregando.CloseWaitForm();
         }
 
         public async Task ObterDados()
         {
-            var pacotes = crudPacotesDao.GetDadosRastreios().Result;
-            gridControl.DataSource = pacotes;
-          
-            foreach (var pacote in pacotes)
+            try
             {
-                if (pacote.ENTREGUE == false && pacote.DESCRICAO_GERAL != null && pacote.DESCRICAO_GERAL.Contains("entregue ao"))
+                var pacotes = crudPacotesDao.GetDadosRastreios().Result;
+                gridControl.DataSource = pacotes;
+
+                foreach (var pacote in pacotes)
                 {
-                    _ = crudPacotesDao.EncerrarPacoteEntregue(pacote.ID);
+                    if (pacote.ENTREGUE == false && pacote.DESCRICAO_GERAL != null && pacote.DESCRICAO_GERAL.Contains("entregue ao"))
+                    {
+                        await crudPacotesDao.EncerrarPacoteEntregue(pacote.ID);
+                    }
                 }
+
+                barStaticItem1.Caption = $"Pacotes: {pacotes.Count()}";
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(ex.Message, "erro ao tentar obter dados");
             }
         }
 
 
-   
+
         void bbiPrintPreview_ItemClick(object sender, ItemClickEventArgs e)
         {
             gridControl.ShowRibbonPrintPreview();
@@ -56,32 +73,65 @@ namespace RastreioCorreiosWindowsForms.UI
             janelinha.Show();
         }
 
+        //botao atualizar
         private void bbiRefresh_ItemClick(object sender, ItemClickEventArgs e)
         {
-            _ = ObterDados();
+            if (!splashTelaCarregando.IsSplashFormVisible)
+            {
+                splashTelaCarregando.ShowWaitForm();
+                splashTelaCarregando.SetWaitFormDescription("Obtendo pacotes do banco de dados.");
+            }
+            if (!backgroundWorker.IsBusy)backgroundWorker.RunWorkerAsync();
+            //_ = ObterDados();
+            if (splashTelaCarregando.IsSplashFormVisible) splashTelaCarregando.CloseWaitForm();
+            gridControl.RefreshDataSource();
         }
 
         private void bbiDelete_ItemClick(object sender, EventArgs e)
         {
-            GridView gridView = gridControl.FocusedView as GridView;
-            var dadosLinhaSelecionada = (Models.CodigosRastreio)gridView.GetRow(gridView.FocusedRowHandle);
-            crudPacotesDao.DeletarPacote(dadosLinhaSelecionada.ID);
-            _ = ObterDados();
+            try
+            {
+                GridView gridView = gridControl.FocusedView as GridView;
+                var dadosLinhaSelecionada = (Models.CodigosRastreio)gridView.GetRow(gridView.FocusedRowHandle);
+                crudPacotesDao.DeletarPacote(dadosLinhaSelecionada.ID);
+                _ = ObterDados();
+            }
+            catch (Exception ex)
+            {
+
+                XtraMessageBox.Show(ex.Message, "erro ao tentar deletar"); ;
+            }
         }
 
         private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
         {
-            XtraMessageBox.Show("Iniciando atualização dos pacotes.");
-            Task.Run(manterDadosAtualizados.ListarAtualizarPacotes);
-            // manterDadosAtualizados.ListarAtualizarPacotes();
-            ObterDados();
+            try
+            {
+                XtraMessageBox.Show("Iniciando atualização dos pacotes.");
+                Task.Run(manterDadosAtualizados.ListarAtualizarPacotes);
+                // manterDadosAtualizados.ListarAtualizarPacotes();
+                ObterDados();
+            }
+            catch (Exception ex)
+            {
+
+                XtraMessageBox.Show(ex.Message, "erro ao tentar atualizar pacotes"); ;
+            }
         }
 
         private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var cadastroEmMassa = new CadastroPacoteEmMassa();
-            cadastroEmMassa.Show();
-            ObterDados();
+            try
+            {
+                var cadastroEmMassa = new CadastroPacoteEmMassa();
+                cadastroEmMassa.Show();
+                ObterDados();
+            }
+            catch (Exception ex)
+            {
+
+                XtraMessageBox.Show(ex.Message, "erro ao tentar cadastrar em massa"); ;
+            }
         }
 
         private void gridView_RowCellStyle(object sender, RowCellStyleEventArgs e)
@@ -92,7 +142,31 @@ namespace RastreioCorreiosWindowsForms.UI
             {
                 e.Appearance.BackColor = Color.Salmon;
             }
+        }
 
+        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var listaAnterior = (IEnumerable<CodigosRastreio>)gridControl.DataSource;
+            foreach (var objeto in listaAnterior)
+            {
+                if (objeto.ENTREGUE == true) continue;
+                var teste = DateTime.Now.Subtract(objeto.ULTIMO_PROCESSAMENTO);
+                if (teste.TotalMinutes < 3) continue;
+
+                //if (objeto.DESCRICAO_GERAL != null && objeto.DESCRICAO_GERAL.Contains("entregue ao")) continue;
+                var rastreio = manterDadosAtualizados.AtualizarPacotesDiretamente(objeto);
+                objeto.DESCRICAO_GERAL = rastreio.Result.DESCRICAO_GERAL;
+                objeto.ULTIMO_PROCESSAMENTO = rastreio.Result.ULTIMO_PROCESSAMENTO;
+               //atualização constante da tela
+               // gridControl.RefreshDataSource();
+            }
+            e.Result = listaAnterior;
+            barStaticItem1.Caption = $"Pacotes: {listaAnterior.Count()}";
+        }
+
+        private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            gridControl.DataSource = e.Result;  
         }
     }
 }

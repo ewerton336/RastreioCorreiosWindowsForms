@@ -39,10 +39,12 @@ namespace RastreioCorreiosWindowsForms.UI
             this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
+            this.barStaticItem1 = new DevExpress.XtraBars.BarStaticItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.bsiRecordsCount = new DevExpress.XtraBars.BarStaticItem();
             this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -53,6 +55,8 @@ namespace RastreioCorreiosWindowsForms.UI
             this.UltimoProcessamento = new DevExpress.XtraGrid.Columns.GridColumn();
             this.Entregue = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridControl = new DevExpress.XtraGrid.GridControl();
+            this.splashTelaCarregando = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::RastreioCorreiosWindowsForms.UI.TelaCarregando), true, true, true);
+            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl)).BeginInit();
@@ -70,15 +74,17 @@ namespace RastreioCorreiosWindowsForms.UI
             this.bbiRefresh,
             this.barButtonItem1,
             this.barButtonItem3,
-            this.barButtonItem4});
+            this.barButtonItem4,
+            this.barStaticItem1});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 23;
+            this.ribbonControl.MaxItemId = 24;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.Office2013;
             this.ribbonControl.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.False;
-            this.ribbonControl.Size = new System.Drawing.Size(1068, 162);
+            this.ribbonControl.Size = new System.Drawing.Size(1066, 154);
+            this.ribbonControl.StatusBar = this.ribbonStatusBar1;
             this.ribbonControl.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             // 
             // bbiPrintPreview
@@ -145,6 +151,12 @@ namespace RastreioCorreiosWindowsForms.UI
             this.barButtonItem4.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
             this.barButtonItem4.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem4_ItemClick);
             // 
+            // barStaticItem1
+            // 
+            this.barStaticItem1.Caption = "Pacotes: ";
+            this.barStaticItem1.Id = 23;
+            this.barStaticItem1.Name = "barStaticItem1";
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -180,6 +192,14 @@ namespace RastreioCorreiosWindowsForms.UI
             this.ribbonPageGroup3.ItemLinks.Add(this.barButtonItem3);
             this.ribbonPageGroup3.Name = "ribbonPageGroup3";
             this.ribbonPageGroup3.Text = "ribbonPageGroup3";
+            // 
+            // ribbonStatusBar1
+            // 
+            this.ribbonStatusBar1.ItemLinks.Add(this.barStaticItem1);
+            this.ribbonStatusBar1.Location = new System.Drawing.Point(0, 626);
+            this.ribbonStatusBar1.Name = "ribbonStatusBar1";
+            this.ribbonStatusBar1.Ribbon = this.ribbonControl;
+            this.ribbonStatusBar1.Size = new System.Drawing.Size(1066, 22);
             // 
             // bsiRecordsCount
             // 
@@ -267,25 +287,36 @@ namespace RastreioCorreiosWindowsForms.UI
             // gridControl
             // 
             this.gridControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridControl.Location = new System.Drawing.Point(0, 162);
+            this.gridControl.Location = new System.Drawing.Point(0, 154);
             this.gridControl.MainView = this.gridView;
             this.gridControl.MenuManager = this.ribbonControl;
             this.gridControl.Name = "gridControl";
-            this.gridControl.Size = new System.Drawing.Size(1068, 487);
+            this.gridControl.Size = new System.Drawing.Size(1066, 494);
             this.gridControl.TabIndex = 2;
             this.gridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
+            // 
+            // splashTelaCarregando
+            // 
+            this.splashTelaCarregando.ClosingDelay = 500;
+            // 
+            // backgroundWorker
+            // 
+            this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
+            this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
             // 
             // JanelaPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1068, 649);
+            this.ClientSize = new System.Drawing.Size(1066, 648);
+            this.Controls.Add(this.ribbonStatusBar1);
             this.Controls.Add(this.gridControl);
             this.Controls.Add(this.ribbonControl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "JanelaPrincipal";
             this.Ribbon = this.ribbonControl;
+            this.StatusBar = this.ribbonStatusBar1;
             this.Text = "Rastreamento de Pacotes - Ewerton Guimarães";
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
@@ -319,5 +350,10 @@ namespace RastreioCorreiosWindowsForms.UI
         private DevExpress.XtraGrid.Columns.GridColumn UltimoProcessamento;
         private DevExpress.XtraGrid.Columns.GridColumn Entregue;
         private DevExpress.XtraGrid.GridControl gridControl;
+        private DevExpress.XtraBars.BarStaticItem barStaticItem1;
+        private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar1;
+      
+        private DevExpress.XtraSplashScreen.SplashScreenManager splashTelaCarregando;
+        private System.ComponentModel.BackgroundWorker backgroundWorker;
     }
 }
