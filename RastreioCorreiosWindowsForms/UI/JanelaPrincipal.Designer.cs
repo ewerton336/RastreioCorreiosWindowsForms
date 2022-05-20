@@ -35,7 +35,7 @@ namespace RastreioCorreiosWindowsForms.UI
             this.bbiNew = new DevExpress.XtraBars.BarButtonItem();
             this.bbiEdit = new DevExpress.XtraBars.BarButtonItem();
             this.bbiDelete = new DevExpress.XtraBars.BarButtonItem();
-            this.bbiRefresh = new DevExpress.XtraBars.BarButtonItem();
+            this.botaoAtualizar = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
@@ -71,7 +71,7 @@ namespace RastreioCorreiosWindowsForms.UI
             this.bbiNew,
             this.bbiEdit,
             this.bbiDelete,
-            this.bbiRefresh,
+            this.botaoAtualizar,
             this.barButtonItem1,
             this.barButtonItem3,
             this.barButtonItem4,
@@ -119,13 +119,13 @@ namespace RastreioCorreiosWindowsForms.UI
             this.bbiDelete.Name = "bbiDelete";
             this.bbiDelete.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiDelete_ItemClick);
             // 
-            // bbiRefresh
+            // botaoAtualizar
             // 
-            this.bbiRefresh.Caption = "Atualizar dados";
-            this.bbiRefresh.Id = 19;
-            this.bbiRefresh.ImageOptions.ImageUri.Uri = "Refresh";
-            this.bbiRefresh.Name = "bbiRefresh";
-            this.bbiRefresh.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiRefresh_ItemClick);
+            this.botaoAtualizar.Caption = "Atualizar dados";
+            this.botaoAtualizar.Id = 19;
+            this.botaoAtualizar.ImageOptions.ImageUri.Uri = "Refresh";
+            this.botaoAtualizar.Name = "botaoAtualizar";
+            this.botaoAtualizar.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.botaoAtualizar_ItemClick);
             // 
             // barButtonItem1
             // 
@@ -174,7 +174,7 @@ namespace RastreioCorreiosWindowsForms.UI
             this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem4);
             this.ribbonPageGroup1.ItemLinks.Add(this.bbiEdit);
             this.ribbonPageGroup1.ItemLinks.Add(this.bbiDelete);
-            this.ribbonPageGroup1.ItemLinks.Add(this.bbiRefresh);
+            this.ribbonPageGroup1.ItemLinks.Add(this.botaoAtualizar);
             this.ribbonPageGroup1.Name = "ribbonPageGroup1";
             this.ribbonPageGroup1.ShowCaptionButton = false;
             this.ribbonPageGroup1.Text = "Tasks";
@@ -335,7 +335,7 @@ namespace RastreioCorreiosWindowsForms.UI
         private DevExpress.XtraBars.BarButtonItem bbiNew;
         private DevExpress.XtraBars.BarButtonItem bbiEdit;
         private DevExpress.XtraBars.BarButtonItem bbiDelete;
-        private DevExpress.XtraBars.BarButtonItem bbiRefresh;
+        private DevExpress.XtraBars.BarButtonItem botaoAtualizar;
         private DevExpress.XtraBars.BarButtonItem barButtonItem1;
         private DevExpress.XtraBars.BarButtonItem barButtonItem3;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;

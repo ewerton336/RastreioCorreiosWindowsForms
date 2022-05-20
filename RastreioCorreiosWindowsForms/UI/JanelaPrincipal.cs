@@ -74,7 +74,7 @@ namespace RastreioCorreiosWindowsForms.UI
         }
 
         //botao atualizar
-        private void bbiRefresh_ItemClick(object sender, ItemClickEventArgs e)
+        private void botaoAtualizar_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (!splashTelaCarregando.IsSplashFormVisible)
             {
@@ -84,7 +84,7 @@ namespace RastreioCorreiosWindowsForms.UI
             if (!backgroundWorker.IsBusy)backgroundWorker.RunWorkerAsync();
             //_ = ObterDados();
             if (splashTelaCarregando.IsSplashFormVisible) splashTelaCarregando.CloseWaitForm();
-            gridControl.RefreshDataSource();
+           gridControl.RefreshDataSource();
         }
 
         private void bbiDelete_ItemClick(object sender, EventArgs e)
@@ -146,7 +146,7 @@ namespace RastreioCorreiosWindowsForms.UI
 
         private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            var listaAnterior = (IEnumerable<CodigosRastreio>)gridControl.DataSource;
+            var listaAnterior = (List<CodigosRastreio>)gridControl.DataSource;
             foreach (var objeto in listaAnterior)
             {
                 if (objeto.ENTREGUE == true) continue;
@@ -157,8 +157,8 @@ namespace RastreioCorreiosWindowsForms.UI
                 var rastreio = manterDadosAtualizados.AtualizarPacotesDiretamente(objeto);
                 objeto.DESCRICAO_GERAL = rastreio.Result.DESCRICAO_GERAL;
                 objeto.ULTIMO_PROCESSAMENTO = rastreio.Result.ULTIMO_PROCESSAMENTO;
-               //atualização constante da tela
-               // gridControl.RefreshDataSource();
+                //atualização constante da tela
+                // gridControl.RefreshDataSource();
             }
             e.Result = listaAnterior;
             barStaticItem1.Caption = $"Pacotes: {listaAnterior.Count()}";
@@ -167,6 +167,13 @@ namespace RastreioCorreiosWindowsForms.UI
         private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             gridControl.DataSource = e.Result;  
+        }
+
+        private void gridControl_DoubleClick(object sender, EventArgs e)
+        {
+            var teste = gridView.GetFocusedRow();
+
+
         }
     }
 }

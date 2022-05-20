@@ -75,9 +75,10 @@ namespace RastreioCorreiosWindowsForms.DAO
         {
             string sql = @"UPDATE isangue_ewertondev.CORREIOS_RASTREAMENTO
                             SET ENTREGUE = 1
-                            ,DATA_ENCERRAMENTO = SYSDATE()- interval '3' hour;
+                            ,DATA_ENCERRAMENTO = SYSDATE()- interval '3' hour
                             WHERE ID = @ID";
-            var result = await DbConnection.ExecuteAsync(sql, new { ID = idPacote });
+             await DbConnection.ExecuteAsync(sql, new { ID = idPacote });
+             DbConnection.Close();
         }
 
         public async Task AtualizarDescricaoRastreio(string codRastreio, string descricao)
