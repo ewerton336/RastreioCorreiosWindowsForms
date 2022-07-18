@@ -25,24 +25,39 @@ namespace RastreioCorreiosWindowsForms.UI
             InitializeComponent();
         }
 
-        private void botaoCadastrar_Click(object sender, EventArgs e)
+        private async void botaoCadastrar_Click(object sender, EventArgs e)
         {
+            if (!splashTelaCarregando.IsSplashFormVisible)
+            {
+                splashTelaCarregando.ShowWaitForm();
+            }
              int clienteCheck = checkPacoteClientes.Checked ? 1 : 0;
               string conteudoPacote = textoDescricao.Text;
             var conteudoCaixaTexto = caixaTexto.Text;
             var rastreios = conteudoCaixaTexto.Split("\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
-            var telaCarregando = new TelaCarregando();
-            telaCarregando.ShowDialog();
-            foreach (string rastreio in rastreios)
+            int itemAtual = 1;
+
+            //cadastro em massa dos pacotes
+            Parallel.ForEach(rastreios, rastreio =>
             {
-                int itemAtual = 1;
-                telaCarregando.SetDescription($"Salvando {itemAtual} de {rastreios.Count()} ");
-                _ =crudPacotes.InserirPacote(rastreio, clienteCheck, conteudoPacote);
+                splashTelaCarregando.SetWaitFormDescription($"Salvando {itemAtual} de {rastreios.Count()} ");
+                _ = crudPacotes.InserirPacote(rastreio, clienteCheck, conteudoPacote);
+                itemAtual++;
+            });
+
+            /*foreach (string rastreio in rastreios)
+            {
+                splashTelaCarregando.SetWaitFormDescription($"Salvando {itemAtual} de {rastreios.Count()} ");   
+                await crudPacotes.InserirPacote(rastreio, clienteCheck, conteudoPacote);
                 itemAtual++;
             }
+            */
+           if (splashTelaCarregando.IsSplashFormVisible)
+            {
+                splashTelaCarregando.CloseWaitForm();
+            }
             Close();
-            Task.Run(manterDadosAtualizados.ListarAtualizarPacotes);
         }
     }
 }

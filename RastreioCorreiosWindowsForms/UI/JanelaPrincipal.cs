@@ -41,7 +41,7 @@ namespace RastreioCorreiosWindowsForms.UI
         {
             try
             {
-                var pacotes = crudPacotesDao.GetDadosRastreios().Result;
+                var pacotes = await crudPacotesDao.GetDadosRastreios();
                 gridControl.DataSource = pacotes;
 
                 foreach (var pacote in pacotes)
@@ -119,13 +119,13 @@ namespace RastreioCorreiosWindowsForms.UI
             }
         }
 
-        private void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
+        private async void barButtonItem4_ItemClick(object sender, ItemClickEventArgs e)
         {
             try
             {
                 var cadastroEmMassa = new CadastroPacoteEmMassa();
-                cadastroEmMassa.Show();
-                ObterDados();
+                cadastroEmMassa.ShowDialog();
+                await ObterDados();
             }
             catch (Exception ex)
             {
@@ -144,7 +144,7 @@ namespace RastreioCorreiosWindowsForms.UI
             }
         }
 
-        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        private async void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             var listaAnterior = (List<CodigosRastreio>)gridControl.DataSource;
             foreach (var objeto in listaAnterior)
@@ -154,9 +154,10 @@ namespace RastreioCorreiosWindowsForms.UI
                 if (teste.TotalMinutes < 3) continue;
 
                 //if (objeto.DESCRICAO_GERAL != null && objeto.DESCRICAO_GERAL.Contains("entregue ao")) continue;
-                var rastreio = manterDadosAtualizados.AtualizarPacotesDiretamente(objeto);
-                objeto.DESCRICAO_GERAL = rastreio.Result.DESCRICAO_GERAL;
-                objeto.ULTIMO_PROCESSAMENTO = rastreio.Result.ULTIMO_PROCESSAMENTO;
+                var rastreio = await manterDadosAtualizados.AtualizarPacotesDiretamente(objeto);
+                objeto.DESCRICAO_GERAL = rastreio.DESCRICAO_GERAL;
+                objeto.ULTIMO_PROCESSAMENTO = rastreio.ULTIMO_PROCESSAMENTO;
+                objeto.ENTREGUE = rastreio.ENTREGUE;
                 //atualização constante da tela
                 // gridControl.RefreshDataSource();
             }

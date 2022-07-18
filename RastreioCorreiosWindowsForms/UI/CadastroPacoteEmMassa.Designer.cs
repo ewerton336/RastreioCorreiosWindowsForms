@@ -35,6 +35,7 @@ namespace RastreioCorreiosWindowsForms.UI
             this.checkPacoteClientes = new DevExpress.XtraEditors.CheckEdit();
             this.textoDescricao = new System.Windows.Forms.TextBox();
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
+            this.splashTelaCarregando = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::RastreioCorreiosWindowsForms.UI.TelaCarregando), true, true);
             ((System.ComponentModel.ISupportInitialize)(this.checkPacoteClientes.Properties)).BeginInit();
             this.SuspendLayout();
             // 
@@ -95,6 +96,10 @@ namespace RastreioCorreiosWindowsForms.UI
             this.labelControl2.TabIndex = 6;
             this.labelControl2.Text = "Descrição";
             // 
+            // splashTelaCarregando
+            // 
+            this.splashTelaCarregando.ClosingDelay = 500;
+            // 
             // CadastroPacoteEmMassa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -122,5 +127,6 @@ namespace RastreioCorreiosWindowsForms.UI
         private DevExpress.XtraEditors.CheckEdit checkPacoteClientes;
         private System.Windows.Forms.TextBox textoDescricao;
         private DevExpress.XtraEditors.LabelControl labelControl2;
+        private DevExpress.XtraSplashScreen.SplashScreenManager splashTelaCarregando;
     }
 }
