@@ -16,7 +16,7 @@ namespace RastreioCorreiosWindowsForms.DAO
 
             if (dbConnection.State != ConnectionState.Open)
             {
-                dbConnection.ConnectionString = "Server=mysql.bateaquihost.com.br;Database=isangue_ewertondev;uid=isangue_ewertondev;pwd=ewertondev123!;";
+                dbConnection.ConnectionString = "Server=mysql.bateaquihost.com.br;Database=isangue_ewertondev;uid=isangue_ewertondev;pwd=ewertondev123!";
                 dbConnection.Open();
             }
 

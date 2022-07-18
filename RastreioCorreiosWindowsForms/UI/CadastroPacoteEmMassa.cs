@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using RastreioCorreiosWindowsForms.DAO;
 using RastreioCorreiosWindowsForms.BLL;
+using RastreioCorreiosWindowsForms.UI;
 
 namespace RastreioCorreiosWindowsForms.UI
 {
@@ -30,10 +31,15 @@ namespace RastreioCorreiosWindowsForms.UI
               string conteudoPacote = textoDescricao.Text;
             var conteudoCaixaTexto = caixaTexto.Text;
             var rastreios = conteudoCaixaTexto.Split("\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-           
+
+            var telaCarregando = new TelaCarregando();
+            telaCarregando.ShowDialog();
             foreach (string rastreio in rastreios)
             {
+                int itemAtual = 1;
+                telaCarregando.SetDescription($"Salvando {itemAtual} de {rastreios.Count()} ");
                 _ =crudPacotes.InserirPacote(rastreio, clienteCheck, conteudoPacote);
+                itemAtual++;
             }
             Close();
             Task.Run(manterDadosAtualizados.ListarAtualizarPacotes);
