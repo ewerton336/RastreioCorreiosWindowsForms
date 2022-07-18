@@ -41,8 +41,8 @@ namespace RastreioCorreiosWindowsForms.UI
             this.barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
             this.barStaticItem1 = new DevExpress.XtraBars.BarStaticItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.bsiRecordsCount = new DevExpress.XtraBars.BarStaticItem();
             this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
@@ -66,6 +66,7 @@ namespace RastreioCorreiosWindowsForms.UI
             this.ribbonControl.ExpandCollapseItem.Id = 0;
             this.ribbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.ribbonControl.ExpandCollapseItem,
+            this.ribbonControl.SearchEditItem,
             this.bbiPrintPreview,
             this.bbiNew,
             this.bbiEdit,
@@ -74,8 +75,7 @@ namespace RastreioCorreiosWindowsForms.UI
             this.barButtonItem1,
             this.barButtonItem3,
             this.barButtonItem4,
-            this.barStaticItem1,
-            this.ribbonControl.SearchEditItem});
+            this.barStaticItem1});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
             this.ribbonControl.MaxItemId = 24;
             this.ribbonControl.Name = "ribbonControl";
@@ -110,6 +110,7 @@ namespace RastreioCorreiosWindowsForms.UI
             this.bbiEdit.Id = 17;
             this.bbiEdit.ImageOptions.ImageUri.Uri = "Edit";
             this.bbiEdit.Name = "bbiEdit";
+            this.bbiEdit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiEdit_ItemClick);
             // 
             // bbiDelete
             // 
@@ -166,6 +167,14 @@ namespace RastreioCorreiosWindowsForms.UI
             this.ribbonPage1.Name = "ribbonPage1";
             this.ribbonPage1.Text = "Início";
             // 
+            // ribbonPageGroup2
+            // 
+            this.ribbonPageGroup2.AllowTextClipping = false;
+            this.ribbonPageGroup2.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
+            this.ribbonPageGroup2.ItemLinks.Add(this.bbiPrintPreview);
+            this.ribbonPageGroup2.Name = "ribbonPageGroup2";
+            this.ribbonPageGroup2.Text = "Print and Export";
+            // 
             // ribbonPageGroup1
             // 
             this.ribbonPageGroup1.AllowTextClipping = false;
@@ -178,14 +187,6 @@ namespace RastreioCorreiosWindowsForms.UI
             this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem3);
             this.ribbonPageGroup1.Name = "ribbonPageGroup1";
             this.ribbonPageGroup1.Text = "Tasks";
-            // 
-            // ribbonPageGroup2
-            // 
-            this.ribbonPageGroup2.AllowTextClipping = false;
-            this.ribbonPageGroup2.CaptionButtonVisible = DevExpress.Utils.DefaultBoolean.False;
-            this.ribbonPageGroup2.ItemLinks.Add(this.bbiPrintPreview);
-            this.ribbonPageGroup2.Name = "ribbonPageGroup2";
-            this.ribbonPageGroup2.Text = "Print and Export";
             // 
             // ribbonStatusBar1
             // 
@@ -285,7 +286,7 @@ namespace RastreioCorreiosWindowsForms.UI
             this.gridControl.MainView = this.gridView;
             this.gridControl.MenuManager = this.ribbonControl;
             this.gridControl.Name = "gridControl";
-            this.gridControl.Size = new System.Drawing.Size(1066, 490);
+            this.gridControl.Size = new System.Drawing.Size(1066, 468);
             this.gridControl.TabIndex = 2;
             this.gridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -304,8 +305,8 @@ namespace RastreioCorreiosWindowsForms.UI
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1066, 648);
-            this.Controls.Add(this.ribbonStatusBar1);
             this.Controls.Add(this.gridControl);
+            this.Controls.Add(this.ribbonStatusBar1);
             this.Controls.Add(this.ribbonControl);
             this.IconOptions.Icon = ((System.Drawing.Icon)(resources.GetObject("JanelaPrincipal.IconOptions.Icon")));
             this.Name = "JanelaPrincipal";

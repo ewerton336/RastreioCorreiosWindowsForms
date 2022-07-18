@@ -20,6 +20,7 @@ namespace RastreioCorreiosWindowsForms.UI
     {
         private readonly CrudPacotes crudPacotesDao;
         private readonly BLL.ManterDadosAtualizados manterDadosAtualizados;
+        private List<CodigosRastreio> listaAnterior = new List<CodigosRastreio>();
         public JanelaPrincipal()
         {
             InitializeComponent();
@@ -74,17 +75,22 @@ namespace RastreioCorreiosWindowsForms.UI
         }
 
         //botao atualizar
-        private void botaoAtualizar_ItemClick(object sender, ItemClickEventArgs e)
+        private async void botaoAtualizar_ItemClick(object sender, ItemClickEventArgs e)
         {
+            
             if (!splashTelaCarregando.IsSplashFormVisible)
             {
                 splashTelaCarregando.ShowWaitForm();
                 splashTelaCarregando.SetWaitFormDescription("Obtendo pacotes do banco de dados.");
             }
-            if (!backgroundWorker.IsBusy)backgroundWorker.RunWorkerAsync();
-            //_ = ObterDados();
+            //if (!backgroundWorker.IsBusy)backgroundWorker.RunWorkerAsync();
+           
+            await ObterDados();
             if (splashTelaCarregando.IsSplashFormVisible) splashTelaCarregando.CloseWaitForm();
+            
            gridControl.RefreshDataSource();
+            gridView.RefreshData();
+            gridControl.Refresh();
         }
 
         private void bbiDelete_ItemClick(object sender, EventArgs e)
@@ -103,14 +109,14 @@ namespace RastreioCorreiosWindowsForms.UI
             }
         }
 
-        private void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
+        private async void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
         {
             try
             {
                 XtraMessageBox.Show("Iniciando atualização dos pacotes.");
-                Task.Run(manterDadosAtualizados.ListarAtualizarPacotes);
+                await Task.Run(manterDadosAtualizados.ListarAtualizarPacotes);
                 // manterDadosAtualizados.ListarAtualizarPacotes();
-                ObterDados();
+                await ObterDados();
             }
             catch (Exception ex)
             {
@@ -146,34 +152,47 @@ namespace RastreioCorreiosWindowsForms.UI
 
         private async void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            var listaAnterior = (List<CodigosRastreio>)gridControl.DataSource;
-            foreach (var objeto in listaAnterior)
+            try
             {
-                if (objeto.ENTREGUE == true) continue;
-                var teste = DateTime.Now.Subtract(objeto.ULTIMO_PROCESSAMENTO);
-                if (teste.TotalMinutes < 3) continue;
+                listaAnterior = (List<CodigosRastreio>)gridControl.DataSource;
+                foreach (var objeto in listaAnterior)
+                {
+                    if (objeto.ENTREGUE == true) continue;
+                    var teste = DateTime.Now.Subtract(objeto.ULTIMO_PROCESSAMENTO);
+                    if (teste.TotalMinutes < 3) continue;
 
-                //if (objeto.DESCRICAO_GERAL != null && objeto.DESCRICAO_GERAL.Contains("entregue ao")) continue;
-                var rastreio = await manterDadosAtualizados.AtualizarPacotesDiretamente(objeto);
-                objeto.DESCRICAO_GERAL = rastreio.DESCRICAO_GERAL;
-                objeto.ULTIMO_PROCESSAMENTO = rastreio.ULTIMO_PROCESSAMENTO;
-                objeto.ENTREGUE = rastreio.ENTREGUE;
-                //atualização constante da tela
-                // gridControl.RefreshDataSource();
+                    //if (objeto.DESCRICAO_GERAL != null && objeto.DESCRICAO_GERAL.Contains("entregue ao")) continue;
+                    var rastreio = await manterDadosAtualizados.AtualizarPacotesDiretamente(objeto);
+                    objeto.DESCRICAO_GERAL = rastreio.DESCRICAO_GERAL;
+                    objeto.ULTIMO_PROCESSAMENTO = rastreio.ULTIMO_PROCESSAMENTO;
+                    objeto.ENTREGUE = rastreio.ENTREGUE;
+                    //atualização constante da tela
+                    // gridControl.RefreshDataSource();
+                }
+                e.Result = listaAnterior;
+                barStaticItem1.Caption = $"Pacotes: {listaAnterior.Count()}";
             }
-            e.Result = listaAnterior;
-            barStaticItem1.Caption = $"Pacotes: {listaAnterior.Count()}";
+            catch (Exception ex)
+            {
+
+                XtraMessageBox.Show (ex.Message, "Erro ao tentar executar backGroundWorker");
+            }
         }
 
         private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            gridControl.DataSource = e.Result;  
+            gridControl.DataSource = listaAnterior;  
         }
 
         private void gridControl_DoubleClick(object sender, EventArgs e)
         {
             var teste = gridView.GetFocusedRow();
 
+
+        }
+
+        private void bbiEdit_ItemClick(object sender, ItemClickEventArgs e)
+        {
 
         }
     }
