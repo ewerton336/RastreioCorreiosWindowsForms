@@ -122,9 +122,10 @@ namespace RastreioCorreiosWindowsForms.UI
             // 
             // botaoAtualizar
             // 
-            this.botaoAtualizar.Caption = "Atualizar dados";
+            this.botaoAtualizar.Caption = "Atualizar todos os dados";
             this.botaoAtualizar.Id = 19;
             this.botaoAtualizar.ImageOptions.ImageUri.Uri = "Refresh";
+            this.botaoAtualizar.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("botaoAtualizar.ImageOptions.SvgImage")));
             this.botaoAtualizar.Name = "botaoAtualizar";
             this.botaoAtualizar.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.botaoAtualizar_ItemClick);
             // 
@@ -136,7 +137,7 @@ namespace RastreioCorreiosWindowsForms.UI
             // 
             // barButtonItem3
             // 
-            this.barButtonItem3.Caption = "Atualizar Rastreios";
+            this.barButtonItem3.Caption = "Atualizar Grid";
             this.barButtonItem3.Id = 21;
             this.barButtonItem3.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem3.ImageOptions.SvgImage")));
             this.barButtonItem3.Name = "barButtonItem3";
@@ -183,8 +184,8 @@ namespace RastreioCorreiosWindowsForms.UI
             this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem4);
             this.ribbonPageGroup1.ItemLinks.Add(this.bbiEdit);
             this.ribbonPageGroup1.ItemLinks.Add(this.bbiDelete);
-            this.ribbonPageGroup1.ItemLinks.Add(this.botaoAtualizar);
             this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItem3);
+            this.ribbonPageGroup1.ItemLinks.Add(this.botaoAtualizar);
             this.ribbonPageGroup1.Name = "ribbonPageGroup1";
             this.ribbonPageGroup1.Text = "Tasks";
             // 

@@ -43,7 +43,8 @@ namespace RastreioCorreiosWindowsForms.UI
             try
             {
                 var pacotes = await crudPacotesDao.GetDadosRastreios();
-                gridControl.DataSource = pacotes;
+                listaAnterior = pacotes.ToList();
+                gridControl.DataSource = listaAnterior;
 
                 foreach (var pacote in pacotes)
                 {
@@ -111,12 +112,13 @@ namespace RastreioCorreiosWindowsForms.UI
 
         private async void barButtonItem3_ItemClick(object sender, ItemClickEventArgs e)
         {
+            //botao atualizar grid
             try
             {
-                XtraMessageBox.Show("Iniciando atualização dos pacotes.");
-                await Task.Run(manterDadosAtualizados.ListarAtualizarPacotes);
-                // manterDadosAtualizados.ListarAtualizarPacotes();
-                await ObterDados();
+                gridControl.DataSource = listaAnterior;
+                gridControl.Refresh();
+                gridControl.RefreshDataSource();
+                gridView.RefreshData();
             }
             catch (Exception ex)
             {
@@ -144,7 +146,7 @@ namespace RastreioCorreiosWindowsForms.UI
         {
             var view = sender as GridView;
             var dadosLinha = (CodigosRastreio)view.GetRow(e.RowHandle);
-            if (dadosLinha.DESCRICAO_GERAL != null && dadosLinha.DESCRICAO_GERAL.Contains("aguardando retirada"))
+            if (dadosLinha != null && dadosLinha.DESCRICAO_GERAL != null && dadosLinha.DESCRICAO_GERAL.Contains("aguardando retirada"))
             {
                 e.Appearance.BackColor = Color.Salmon;
             }
