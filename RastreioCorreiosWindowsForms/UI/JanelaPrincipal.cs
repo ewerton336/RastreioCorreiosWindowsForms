@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using RastreioCorreiosWindowsForms.DAO;
 using DevExpress.XtraGrid.Views.Grid;
 using RastreioCorreiosWindowsForms.Models;
+using DevExpress.XtraGrid.Columns;
 
 namespace RastreioCorreiosWindowsForms.UI
 {
@@ -158,7 +159,6 @@ namespace RastreioCorreiosWindowsForms.UI
                 try
                 {
                     int numeroLinhas = ((List<CodigosRastreio>)gridView.DataSource).Count();
-                
 
                     for (int i = 0; i < numeroLinhas; i++)
                     {

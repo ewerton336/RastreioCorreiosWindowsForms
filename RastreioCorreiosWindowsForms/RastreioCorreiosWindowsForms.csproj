@@ -323,8 +323,6 @@
     <Compile Include="Models\Status.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\IRastreador.cs" />
-    <Compile Include="Services\Rastreador.cs" />
     <Compile Include="UI\CadastroPacoteEmMassa.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -344,6 +342,7 @@
       <DependentUpon>JanelaPrincipal.cs</DependentUpon>
     </Compile>
     <Content Include="DDL\seeder.sql" />
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="UI\TelaCarregando.resx">
       <DependentUpon>TelaCarregando.cs</DependentUpon>
     </EmbeddedResource>
