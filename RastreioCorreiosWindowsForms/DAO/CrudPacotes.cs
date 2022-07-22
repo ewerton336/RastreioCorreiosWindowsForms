@@ -32,7 +32,8 @@ namespace RastreioCorreiosWindowsForms.DAO
                         ,PACOTE_DOS_CLIENTES
                         ,ENTREGUE
                         FROM isangue_ewertondev.CORREIOS_RASTREAMENTO
-                        ORDER BY ID DESC";
+                        ORDER BY ENTREGUE ASC
+                        ,ID DESC";
                 var result = await DbConnection.QueryAsync<CodigosRastreio>(sql);
                 return result;
             }

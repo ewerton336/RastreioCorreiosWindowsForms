@@ -34,8 +34,9 @@ namespace RastreioCorreiosWindowsForms.UI
             manterDadosAtualizados = new BLL.ManterDadosAtualizados();
 
             Task task = ObterDados();
-            Task task2 = manterDadosAtualizados.ListarAtualizarPacotes();
+          //  Task task2 = manterDadosAtualizados.ListarAtualizarPacotes();
             if (splashTelaCarregando.IsSplashFormVisible) splashTelaCarregando.CloseWaitForm();
+            backgroundWorker.RunWorkerAsync();
         }
 
         public async Task ObterDados()
@@ -84,14 +85,12 @@ namespace RastreioCorreiosWindowsForms.UI
                 splashTelaCarregando.ShowWaitForm();
                 splashTelaCarregando.SetWaitFormDescription("Obtendo pacotes do banco de dados.");
             }
-            //if (!backgroundWorker.IsBusy)backgroundWorker.RunWorkerAsync();
+            if (!backgroundWorker.IsBusy)backgroundWorker.RunWorkerAsync();
            
             await ObterDados();
             if (splashTelaCarregando.IsSplashFormVisible) splashTelaCarregando.CloseWaitForm();
             
-           gridControl.RefreshDataSource();
             gridView.RefreshData();
-            gridControl.Refresh();
         }
 
         private void bbiDelete_ItemClick(object sender, EventArgs e)
@@ -154,30 +153,36 @@ namespace RastreioCorreiosWindowsForms.UI
 
         private async void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            try
+            while (true)
             {
-                listaAnterior = (List<CodigosRastreio>)gridControl.DataSource;
-                foreach (var objeto in listaAnterior)
+                try
                 {
-                    if (objeto.ENTREGUE == true) continue;
-                    var teste = DateTime.Now.Subtract(objeto.ULTIMO_PROCESSAMENTO);
-                    if (teste.TotalMinutes < 3) continue;
+                    int numeroLinhas = ((List<CodigosRastreio>)gridView.DataSource).Count();
+                
 
-                    //if (objeto.DESCRICAO_GERAL != null && objeto.DESCRICAO_GERAL.Contains("entregue ao")) continue;
-                    var rastreio = await manterDadosAtualizados.AtualizarPacotesDiretamente(objeto);
-                    objeto.DESCRICAO_GERAL = rastreio.DESCRICAO_GERAL;
-                    objeto.ULTIMO_PROCESSAMENTO = rastreio.ULTIMO_PROCESSAMENTO;
-                    objeto.ENTREGUE = rastreio.ENTREGUE;
-                    //atualização constante da tela
-                    // gridControl.RefreshDataSource();
+                    for (int i = 0; i < numeroLinhas; i++)
+                    {
+                        var objeto = (CodigosRastreio)gridView.GetRow(i);
+                        if (objeto != null)
+                        {
+                            if (objeto.ENTREGUE == true) continue;
+                            var diferencaMinutos = DateTime.Now.Subtract(objeto.ULTIMO_PROCESSAMENTO);
+                            if (diferencaMinutos.TotalMinutes < 3) continue;
+
+                            //if (objeto.DESCRICAO_GERAL != null && objeto.DESCRICAO_GERAL.Contains("entregue ao")) continue;
+                            var rastreio = await manterDadosAtualizados.AtualizarPacotesDiretamente(objeto);
+                            objeto = rastreio;
+                            gridView.RefreshRow(i);
+                        }
+                    }
+                    barStaticItem1.Caption = $"Pacotes: {numeroLinhas}";
+                    System.Threading.Thread.Sleep(10000);
                 }
-                e.Result = listaAnterior;
-                barStaticItem1.Caption = $"Pacotes: {listaAnterior.Count()}";
-            }
-            catch (Exception ex)
-            {
+                catch (Exception ex)
+                {
 
-                XtraMessageBox.Show (ex.Message, "Erro ao tentar executar backGroundWorker");
+                    XtraMessageBox.Show(ex.Message, "Erro ao tentar executar backGroundWorker");
+                } 
             }
         }
 

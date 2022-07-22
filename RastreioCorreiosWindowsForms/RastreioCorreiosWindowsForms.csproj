@@ -349,7 +349,6 @@
     </EmbeddedResource>
     <None Include="Resources\Icon1.ico" />
     <None Include="Resources\box.ico" />
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

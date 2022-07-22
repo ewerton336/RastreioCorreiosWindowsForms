@@ -52,7 +52,7 @@ namespace RastreioCorreiosWindowsForms.BLL
 
                 string descricaoStatusRastreio = pacote.Historico.FirstOrDefault() != null ? pacote.Historico.FirstOrDefault().Localizacao + " " + pacote.Historico.FirstOrDefault().StatusCorreio : pacote.Observacao;
 
-                _ = crudPacotesDao.AtualizarDescricaoRastreio(objeto.CODIGO_RASTREIO, descricaoStatusRastreio);
+                await crudPacotesDao.AtualizarDescricaoRastreio(objeto.CODIGO_RASTREIO, descricaoStatusRastreio);
 
                 objeto.DESCRICAO_GERAL = descricaoStatusRastreio;
                 objeto.ULTIMO_PROCESSAMENTO = DateTime.Now;
