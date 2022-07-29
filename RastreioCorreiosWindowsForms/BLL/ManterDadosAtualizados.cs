@@ -15,7 +15,7 @@ namespace RastreioCorreiosWindowsForms.BLL
         private readonly CrudPacotes crudPacotesDao;
         public ManterDadosAtualizados()
         {
-            crudPacotesDao = new CrudPacotes(Helper.DBConnectionSql);
+            crudPacotesDao = new CrudPacotes();
         }
 
         public async Task ListarAtualizarPacotes()

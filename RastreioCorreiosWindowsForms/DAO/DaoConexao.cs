@@ -10,14 +10,16 @@ namespace RastreioCorreiosWindowsForms.DAO
 {
     public class DaoConexao : IDisposable
     {
-        private MySqlConnection dbcon;
+       
         private IDbConnection con { get; set; }
         public IDbConnection DbConnection { 
             get
             {
-                if (con.State != ConnectionState.Open)
+                if (con == null || con.State != ConnectionState.Open)
                 {
-                    const string conectString = "Server=mysql.bateaquihost.com.br;Database=isangue_ewertondev;uid=isangue_ewertondev;pwd=ewertondev123!";
+                    
+                    
+                    const string conectString = "Server=mysql.bateaquihost.com.br;Database=isangue_ewertondev;uid=isangue_ewertondev;pwd=ewertondev123!;";
                     MySqlConnection dbCon = new MySqlConnection();
                     dbCon.ConnectionString = conectString;
                     dbCon.Open();
@@ -30,17 +32,7 @@ namespace RastreioCorreiosWindowsForms.DAO
                 con = value;
             }
         }
-        public DaoConexao(MySqlConnection dbConnection)
-        {
-
-            if (dbConnection.State != ConnectionState.Open)
-            {
-                dbConnection.ConnectionString = "Server=mysql.bateaquihost.com.br;Database=isangue_ewertondev;uid=isangue_ewertondev;pwd=ewertondev123!";
-                dbConnection.Open();
-            }
-
-            DbConnection = dbConnection;
-        }
+       
 
         public void Dispose()
         {

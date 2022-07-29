@@ -13,10 +13,7 @@ namespace RastreioCorreiosWindowsForms.DAO
     public class CrudPacotes : DaoConexao
     {
 
-        public CrudPacotes(MySqlConnection dbConnection) : base(dbConnection)
-        {
-
-        }
+     
 
 
         public async Task < IEnumerable<CodigosRastreio>> GetDadosRastreios()

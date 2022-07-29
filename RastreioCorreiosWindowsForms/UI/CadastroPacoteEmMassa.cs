@@ -20,7 +20,7 @@ namespace RastreioCorreiosWindowsForms.UI
         private readonly CrudPacotes crudPacotes;
         public CadastroPacoteEmMassa()
         {
-            crudPacotes = new CrudPacotes(RastreioCorreiosWindowsForms.Helper.DBConnectionSql);
+            crudPacotes = new CrudPacotes();
             manterDadosAtualizados = new ManterDadosAtualizados();
             InitializeComponent();
         }

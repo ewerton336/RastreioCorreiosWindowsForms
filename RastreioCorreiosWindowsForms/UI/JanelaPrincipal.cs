@@ -31,7 +31,7 @@ namespace RastreioCorreiosWindowsForms.UI
                 splashTelaCarregando.ShowWaitForm();
                 splashTelaCarregando.SetWaitFormDescription("Inicializando Programa...");
             }
-            crudPacotesDao = new CrudPacotes(RastreioCorreiosWindowsForms.Helper.DBConnectionSql);
+            crudPacotesDao = new CrudPacotes();
             manterDadosAtualizados = new BLL.ManterDadosAtualizados();
 
             Task task = ObterDados();
