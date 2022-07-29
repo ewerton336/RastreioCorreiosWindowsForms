@@ -55,8 +55,10 @@ namespace RastreioCorreiosWindowsForms.UI
                         await crudPacotesDao.EncerrarPacoteEntregue(pacote.ID);
                     }
                 }
-
-                barStaticItem1.Caption = $"Pacotes: {pacotes.Count()}";
+                int pacotesPendentes = pacotes.Where(p => p.ENTREGUE == false).Count();
+                int pacotesEntregues = pacotes.Where(p => p.ENTREGUE == true).Count();
+                int pacotesTotal = pacotes.Count();
+                barStaticItem1.Caption = $"Pacotes Pendentes: {pacotesPendentes} - Pacotes entregues: {pacotesEntregues} - Total: {pacotesTotal}";
             }
             catch (Exception ex)
             {

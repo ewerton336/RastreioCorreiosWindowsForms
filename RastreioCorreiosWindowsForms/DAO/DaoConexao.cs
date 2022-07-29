@@ -10,7 +10,26 @@ namespace RastreioCorreiosWindowsForms.DAO
 {
     public class DaoConexao : IDisposable
     {
-        public IDbConnection DbConnection { get; private set; }
+        private MySqlConnection dbcon;
+        private IDbConnection con { get; set; }
+        public IDbConnection DbConnection { 
+            get
+            {
+                if (con.State != ConnectionState.Open)
+                {
+                    const string conectString = "Server=mysql.bateaquihost.com.br;Database=isangue_ewertondev;uid=isangue_ewertondev;pwd=ewertondev123!";
+                    MySqlConnection dbCon = new MySqlConnection();
+                    dbCon.ConnectionString = conectString;
+                    dbCon.Open();
+                    con = dbCon;
+                }
+                return con;
+            }
+            set
+            {
+                con = value;
+            }
+        }
         public DaoConexao(MySqlConnection dbConnection)
         {
 
