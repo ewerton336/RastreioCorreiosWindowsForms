@@ -317,7 +317,6 @@
       <DependentUpon>TelaCarregando.cs</DependentUpon>
     </Compile>
     <Content Include="DDL\DDL.sql" />
-    <Compile Include="Helper.cs" />
     <Compile Include="Models\CodigosRastreio.cs" />
     <Compile Include="Models\Pacote.cs" />
     <Compile Include="Models\Status.cs" />

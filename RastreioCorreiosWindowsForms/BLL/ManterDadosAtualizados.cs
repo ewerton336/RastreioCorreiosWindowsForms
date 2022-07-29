@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Correios.Pacotes.Services;
 using RastreioCorreiosWindowsForms.DAO;
@@ -18,30 +15,6 @@ namespace RastreioCorreiosWindowsForms.BLL
             crudPacotesDao = new CrudPacotes();
         }
 
-        public async Task ListarAtualizarPacotes()
-        {
-            while (true)
-            {
-                var pacotes = await crudPacotesDao.GetDadosRastreios();
-
-                foreach (var objeto in pacotes)
-                {
-                    if (objeto.ENTREGUE == true) continue;
-                    var teste = DateTime.Now.Subtract(objeto.ULTIMO_PROCESSAMENTO);
-                    if (teste.TotalMinutes < 3) continue;
-
-                    //if (objeto.DESCRICAO_GERAL != null && objeto.DESCRICAO_GERAL.Contains("entregue ao")) continue;
-                    await RastrearPacotes(objeto);
-                }
-                await Task.Delay(60000);
-            }
-        }
-
-        public async Task<CodigosRastreio> AtualizarPacotesDiretamente(CodigosRastreio codigoRastreio)
-        {
-            await RastrearPacoteIndividual(codigoRastreio);
-            return codigoRastreio;
-        }
 
         public async Task<Models.CodigosRastreio> RastrearPacoteIndividual(CodigosRastreio objeto)
         {

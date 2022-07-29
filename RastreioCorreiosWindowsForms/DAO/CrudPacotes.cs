@@ -13,8 +13,6 @@ namespace RastreioCorreiosWindowsForms.DAO
     public class CrudPacotes : DaoConexao
     {
 
-     
-
 
         public async Task < IEnumerable<CodigosRastreio>> GetDadosRastreios()
         {
@@ -88,23 +86,11 @@ namespace RastreioCorreiosWindowsForms.DAO
             var result = await DbConnection.ExecuteAsync(sql, new { DESCRICAO = descricao, CODIGO = codRastreio });
         }
 
-
-
         public void DeletarPacote (int id)
         {
             string sql = @"DELETE FROM isangue_ewertondev.CORREIOS_RASTREAMENTO
                         WHERE ID = @ID";
             DbConnection.Execute(sql, new { ID = id });
-        }
-
-
-        public async Task<IEnumerable<Pacote>> GetCodigosRastreios()
-        {
-            var sql = @"SELECT CODIGO_RASTREIO Codigo
-                        FROM isangue_ewertondev.CORREIOS_RASTREAMENTO 
-                        WHERE ENTREGUE != 1";
-            var result = await DbConnection.QueryAsync<Pacote>(sql);
-            return result;
         }
 
         public async Task<int> VerificarPacoteJaCadastrado(string codrastreio)

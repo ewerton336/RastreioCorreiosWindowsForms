@@ -96,6 +96,7 @@ namespace RastreioCorreiosWindowsForms.UI
             gridView.RefreshData();
         }
 
+
         private void bbiDelete_ItemClick(object sender, EventArgs e)
         {
             try
@@ -172,7 +173,7 @@ namespace RastreioCorreiosWindowsForms.UI
                             if (diferencaMinutos.TotalMinutes < 3) continue;
 
                             //if (objeto.DESCRICAO_GERAL != null && objeto.DESCRICAO_GERAL.Contains("entregue ao")) continue;
-                            var rastreio = await manterDadosAtualizados.AtualizarPacotesDiretamente(objeto);
+                            var rastreio = await manterDadosAtualizados.RastrearPacoteIndividual(objeto);
                             objeto = rastreio;
                             gridView.RefreshRow(i);
                         }
