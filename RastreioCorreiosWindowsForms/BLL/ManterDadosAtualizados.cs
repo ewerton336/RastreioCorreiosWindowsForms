@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Correios.Pacotes.Services;
 using RastreioCorreiosWindowsForms.DAO;
 using RastreioCorreiosWindowsForms.Models;
+using Newtonsoft.Json;
 
 namespace RastreioCorreiosWindowsForms.BLL
 {
@@ -39,6 +41,20 @@ namespace RastreioCorreiosWindowsForms.BLL
                 objeto.DESCRICAO_GERAL = ex.Message;
                 return objeto;
             }
+        }
+
+        public async Task<Models.CodigosRastreio> RastrearApi (CodigosRastreio objeto)
+        {
+            var http = new HttpClient();
+
+            http.BaseAddress = new Uri("https://proxyapp.correios.com.br/v1/sro-rastro/");
+
+            var result =await http.GetAsync("NL164732108BR");
+            var response = await result.Content.ReadAsStringAsync();
+
+            var respostaDisserializada = JsonConvert.DeserializeObject<Models.CodigosRastreio>(response);
+
+            return respostaDisserializada;
         }
     }
 }

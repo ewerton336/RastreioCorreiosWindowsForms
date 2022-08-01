@@ -24,6 +24,7 @@ namespace RastreioCorreiosWindowsForms.UI
         private List<CodigosRastreio> listaAnterior = new List<CodigosRastreio>();
         public JanelaPrincipal()
         {
+        
             InitializeComponent();
             //aparecer tela de carregando ao iniciar programa
             if (!splashTelaCarregando.IsSplashFormVisible)
@@ -38,6 +39,8 @@ namespace RastreioCorreiosWindowsForms.UI
           //  Task task2 = manterDadosAtualizados.ListarAtualizarPacotes();
             if (splashTelaCarregando.IsSplashFormVisible) splashTelaCarregando.CloseWaitForm();
             backgroundWorker.RunWorkerAsync();
+
+            var teste = manterDadosAtualizados.RastrearApi(listaAnterior.First());
         }
 
         public async Task ObterDados()
