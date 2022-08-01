@@ -29,6 +29,7 @@ namespace RastreioCorreiosWindowsForms.BLL
 
                 objeto.DESCRICAO_GERAL = descricaoStatusRastreio;
                 objeto.ULTIMO_PROCESSAMENTO = DateTime.Now;
+          
 
                 return objeto;
             }

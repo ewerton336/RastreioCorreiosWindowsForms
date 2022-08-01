@@ -12,7 +12,10 @@ namespace RastreioCorreiosWindowsForms.DAO
 {
     public class CrudPacotes : DaoConexao
     {
-
+        public CrudPacotes()
+        {
+            
+        }
 
         public async Task < IEnumerable<CodigosRastreio>> GetDadosRastreios()
         {

@@ -47,14 +47,6 @@ namespace RastreioCorreiosWindowsForms.UI
                 var pacotes = await crudPacotesDao.GetDadosRastreios();
                 listaAnterior = pacotes.ToList();
                 gridControl.DataSource = listaAnterior;
-
-                foreach (var pacote in pacotes)
-                {
-                    if (pacote.ENTREGUE == false && pacote.DESCRICAO_GERAL != null && pacote.DESCRICAO_GERAL.Contains("entregue ao"))
-                    {
-                        await crudPacotesDao.EncerrarPacoteEntregue(pacote.ID);
-                    }
-                }
                 int pacotesPendentes = pacotes.Where(p => p.ENTREGUE == false).Count();
                 int pacotesEntregues = pacotes.Where(p => p.ENTREGUE == true).Count();
                 int pacotesTotal = pacotes.Count();
@@ -174,6 +166,11 @@ namespace RastreioCorreiosWindowsForms.UI
 
                             //if (objeto.DESCRICAO_GERAL != null && objeto.DESCRICAO_GERAL.Contains("entregue ao")) continue;
                             var rastreio = await manterDadosAtualizados.RastrearPacoteIndividual(objeto);
+                            if (rastreio.DESCRICAO_GERAL.Contains("entregue ao"))
+                            {
+                                await crudPacotesDao.EncerrarPacoteEntregue(rastreio.ID);
+                                rastreio.ENTREGUE = true;
+                            }
                             objeto = rastreio;
                             gridView.RefreshRow(i);
                         }
