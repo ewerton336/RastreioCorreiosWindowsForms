@@ -80,8 +80,6 @@ namespace RastreioCorreiosWindowsForms.UI
                 splashTelaCarregando.ShowWaitForm();
                 splashTelaCarregando.SetWaitFormDescription("Obtendo pacotes do banco de dados.");
             }
-            if (!backgroundWorker.IsBusy)backgroundWorker.RunWorkerAsync();
-           
             await ObterDados();
             if (splashTelaCarregando.IsSplashFormVisible) splashTelaCarregando.CloseWaitForm();
             

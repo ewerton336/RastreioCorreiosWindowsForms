@@ -40,22 +40,5 @@ namespace RastreioCorreiosWindowsForms.BLL
                 return objeto;
             }
         }
-
-        public async Task RastrearPacotes(CodigosRastreio objeto)
-        {
-            try
-            {
-                Rastreador rastreador = new Rastreador();
-                var pacote = await rastreador.ObterPacoteAsync(objeto.CODIGO_RASTREIO);
-
-                string descricaoStatusRastreio = pacote.Historico.FirstOrDefault() != null ? pacote.Historico.FirstOrDefault().Localizacao + " " + pacote.Historico.FirstOrDefault().StatusCorreio : pacote.Observacao;
-
-                await crudPacotesDao.AtualizarDescricaoRastreio(objeto.CODIGO_RASTREIO, descricaoStatusRastreio);
-            }
-            catch (Exception ex)
-            {
-                await crudPacotesDao.AtualizarDescricaoRastreio(objeto.CODIGO_RASTREIO, ex.Message.ToString());
-            }
-        }
     }
 }
