@@ -12,9 +12,11 @@ namespace RastreioCorreiosWindowsForms.BLL
     public class ManterDadosAtualizados
     {
         private readonly CrudPacotes crudPacotesDao;
+        private HttpClient http;
         public ManterDadosAtualizados()
         {
             crudPacotesDao = new CrudPacotes();
+            http = new HttpClient { BaseAddress = new Uri("https://proxyapp.correios.com.br/v1/sro-rastro/") };
         }
 
 
@@ -45,16 +47,21 @@ namespace RastreioCorreiosWindowsForms.BLL
 
         public async Task<Models.CodigosRastreio> RastrearApi (CodigosRastreio objeto)
         {
-            var http = new HttpClient();
-
-            http.BaseAddress = new Uri("https://proxyapp.correios.com.br/v1/sro-rastro/");
-
-            var result =await http.GetAsync("NL164732108BR");
+            var result =await http.GetAsync(objeto.CODIGO_RASTREIO);
             var response = await result.Content.ReadAsStringAsync();
 
-            var respostaDisserializada = JsonConvert.DeserializeObject<Models.CodigosRastreio>(response);
+            var respostaDisserializada = JsonConvert.DeserializeObject<Models.CodigoRastreioApi.Root>(response);
 
-            return respostaDisserializada;
+            var descricao = respostaDisserializada.objetos.FirstOrDefault().eventos.FirstOrDefault().unidade.endereco.cidade;
+            descricao += " / " + respostaDisserializada.objetos.FirstOrDefault().eventos.FirstOrDefault().unidade.endereco.uf;
+            descricao += " " + respostaDisserializada.objetos.FirstOrDefault().eventos.FirstOrDefault().descricao;
+
+            objeto.DESCRICAO_GERAL = descricao;
+            objeto.ULTIMO_PROCESSAMENTO = DateTime.Now;
+
+            await crudPacotesDao.AtualizarDescricaoRastreio(objeto.CODIGO_RASTREIO, descricao);
+
+            return objeto;
         }
     }
 }

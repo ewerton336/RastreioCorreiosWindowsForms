@@ -310,6 +310,7 @@
     <Compile Include="BLL\ManterDadosAtualizados.cs" />
     <Compile Include="DAO\CrudPacotes.cs" />
     <Compile Include="DAO\DaoConexao.cs" />
+    <Compile Include="Models\CodigoRastreioApi.cs" />
     <Compile Include="UI\TelaCarregando.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -24,7 +24,7 @@ namespace RastreioCorreiosWindowsForms.UI
         private List<CodigosRastreio> listaAnterior = new List<CodigosRastreio>();
         public JanelaPrincipal()
         {
-        
+
             InitializeComponent();
             //aparecer tela de carregando ao iniciar programa
             if (!splashTelaCarregando.IsSplashFormVisible)
@@ -36,11 +36,11 @@ namespace RastreioCorreiosWindowsForms.UI
             manterDadosAtualizados = new BLL.ManterDadosAtualizados();
 
             Task task = ObterDados();
-          //  Task task2 = manterDadosAtualizados.ListarAtualizarPacotes();
+            //  Task task2 = manterDadosAtualizados.ListarAtualizarPacotes();
             if (splashTelaCarregando.IsSplashFormVisible) splashTelaCarregando.CloseWaitForm();
             backgroundWorker.RunWorkerAsync();
 
-            var teste = manterDadosAtualizados.RastrearApi(listaAnterior.First());
+            // var teste = manterDadosAtualizados.RastrearApi(listaAnterior.First());
         }
 
         public async Task ObterDados()
@@ -77,7 +77,7 @@ namespace RastreioCorreiosWindowsForms.UI
         //botao atualizar
         private async void botaoAtualizar_ItemClick(object sender, ItemClickEventArgs e)
         {
-            
+
             if (!splashTelaCarregando.IsSplashFormVisible)
             {
                 splashTelaCarregando.ShowWaitForm();
@@ -85,7 +85,7 @@ namespace RastreioCorreiosWindowsForms.UI
             }
             await ObterDados();
             if (splashTelaCarregando.IsSplashFormVisible) splashTelaCarregando.CloseWaitForm();
-            
+
             gridView.RefreshData();
         }
 
@@ -155,6 +155,7 @@ namespace RastreioCorreiosWindowsForms.UI
                 try
                 {
                     int numeroLinhas = ((List<CodigosRastreio>)gridView.DataSource).Count();
+                    var listaAtualizarBancoDeDados = new List<CodigosRastreio>();
 
                     for (int i = 0; i < numeroLinhas; i++)
                     {
@@ -164,32 +165,49 @@ namespace RastreioCorreiosWindowsForms.UI
                             if (objeto.ENTREGUE == true) continue;
                             var diferencaMinutos = DateTime.Now.Subtract(objeto.ULTIMO_PROCESSAMENTO);
                             if (diferencaMinutos.TotalMinutes < 3) continue;
+                            objeto = await RastrearPacote(objeto);
 
-                            //if (objeto.DESCRICAO_GERAL != null && objeto.DESCRICAO_GERAL.Contains("entregue ao")) continue;
-                            var rastreio = await manterDadosAtualizados.RastrearPacoteIndividual(objeto);
-                            if (rastreio.DESCRICAO_GERAL.Contains("entregue ao"))
+                            // se após rastrear o status for entregue, é adicionado na lista para enviar ao banco de dados
+                            if (objeto.ENTREGUE)
                             {
-                                await crudPacotesDao.EncerrarPacoteEntregue(rastreio.ID);
-                                rastreio.ENTREGUE = true;
+                                listaAtualizarBancoDeDados.Add(objeto);
+                                // await crudPacotesDao.EncerrarPacoteEntregue(objeto.ID);
                             }
-                            objeto = rastreio;
                             gridView.RefreshRow(i);
                         }
+                        int pacotesPendentes = ((List<CodigosRastreio>)gridView.DataSource).Where(p => p.ENTREGUE == false).Count();
+                        int pacotesEntregues = ((List<CodigosRastreio>)gridView.DataSource).Where(p => p.ENTREGUE == true).Count();
+                        int pacotesTotal = ((List<CodigosRastreio>)gridView.DataSource).Count();
+                        barStaticItem1.Caption = $"Pacotes Pendentes: {pacotesPendentes} - Pacotes entregues: {pacotesEntregues} - Total: {pacotesTotal}";
                     }
-                    barStaticItem1.Caption = $"Pacotes: {numeroLinhas}";
+                    foreach (var item in listaAtualizarBancoDeDados)
+                    {
+                        await crudPacotesDao.EncerrarPacoteEntregue(item.ID);
+                    }
+
+
                     System.Threading.Thread.Sleep(10000);
                 }
                 catch (Exception ex)
                 {
-
                     XtraMessageBox.Show(ex.Message, "Erro ao tentar executar backGroundWorker");
-                } 
+                }
             }
+        }
+
+        private async Task<CodigosRastreio> RastrearPacote(CodigosRastreio objeto)
+        {
+            var rastreio = await manterDadosAtualizados.RastrearApi(objeto);
+            if (rastreio.DESCRICAO_GERAL.Contains("entregue ao"))
+            {
+                rastreio.ENTREGUE = true;
+            }
+            return rastreio;
         }
 
         private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            gridControl.DataSource = listaAnterior;  
+            gridControl.DataSource = listaAnterior;
         }
 
         private void gridControl_DoubleClick(object sender, EventArgs e)
