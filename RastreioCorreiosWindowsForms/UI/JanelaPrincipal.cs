@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using RastreioCorreiosWindowsForms.DAO;
 using DevExpress.XtraGrid.Views.Grid;
 using RastreioCorreiosWindowsForms.Models;
+using System.Threading;
 
 namespace RastreioCorreiosWindowsForms.UI
 {
@@ -34,7 +35,11 @@ namespace RastreioCorreiosWindowsForms.UI
             Task task = ObterDados();
             //  Task task2 = manterDadosAtualizados.ListarAtualizarPacotes();
             if (splashTelaCarregando.IsSplashFormVisible) splashTelaCarregando.CloseWaitForm();
-            backgroundWorker.RunWorkerAsync();
+            #region Manter Worker rodando em outra Thread
+            Thread th = new Thread(new ThreadStart(backgroundWorker.RunWorkerAsync));
+            th.Start();
+            #region
+            //backgroundWorker.RunWorkerAsync();
 
             // var teste = manterDadosAtualizados.RastrearApi(listaAnterior.First());
         }
@@ -169,6 +174,7 @@ namespace RastreioCorreiosWindowsForms.UI
                                 listaAtualizarBancoDeDados.Add(objeto);
                                 // await crudPacotesDao.EncerrarPacoteEntregue(objeto.ID);
                             }
+                            var teste = gridView;
                             gridView.RefreshRow(i);
                         }
                         int pacotesPendentes = ((List<CodigosRastreio>)gridView.DataSource).Where(p => p.ENTREGUE == false).Count();

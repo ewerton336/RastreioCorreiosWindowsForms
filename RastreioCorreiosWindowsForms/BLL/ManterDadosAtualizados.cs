@@ -52,14 +52,19 @@ namespace RastreioCorreiosWindowsForms.BLL
 
             var respostaDisserializada = JsonConvert.DeserializeObject<Models.CodigoRastreioApi.Root>(response);
 
-            var descricao = respostaDisserializada.objetos.FirstOrDefault().eventos.FirstOrDefault().unidade.endereco.cidade;
-            descricao += " / " + respostaDisserializada.objetos.FirstOrDefault().eventos.FirstOrDefault().unidade.endereco.uf;
-            descricao += " " + respostaDisserializada.objetos.FirstOrDefault().eventos.FirstOrDefault().descricao;
+            var descricao = "";
+            if (respostaDisserializada.objetos.FirstOrDefault().eventos != null)
+            {
+                descricao = respostaDisserializada.objetos.FirstOrDefault().eventos.FirstOrDefault().dtHrCriado.ToString();
+                descricao += respostaDisserializada.objetos.FirstOrDefault().eventos.FirstOrDefault().unidade.endereco.cidade;
+                descricao += " / " + respostaDisserializada.objetos.FirstOrDefault().eventos.FirstOrDefault().unidade.endereco.uf;
+                descricao += " " + respostaDisserializada.objetos.FirstOrDefault().eventos.FirstOrDefault().descricao;
+            }
 
             objeto.DESCRICAO_GERAL = descricao;
             objeto.ULTIMO_PROCESSAMENTO = DateTime.Now;
 
-            await crudPacotesDao.AtualizarDescricaoRastreio(objeto.CODIGO_RASTREIO, descricao);
+            Task t = crudPacotesDao.AtualizarDescricaoRastreio(objeto.CODIGO_RASTREIO, descricao);
 
             return objeto;
         }
