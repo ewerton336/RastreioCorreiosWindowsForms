@@ -118,6 +118,35 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="DevExpress.Data.v22.1" name="DevExpress.Data.v22.1, Version=22.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <data name="botaoMudarTema.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v22.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIyLjEsIFZlcnNpb249MjIuMS4z
+        LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
+        dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAPAEAAAC77u/
+        PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
+        IHZpZXdCb3g9IjAgMCAzMiAzMiIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
+        MjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWw6c3Bh
+        Y2U9InByZXNlcnZlIiBpZD0iTGF5ZXJfMSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAg
+        MzIgMzIiPg0KICA8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLkJsdWV7ZmlsbDojMTE3N0Q3O30KCS5C
+        bGFja3tmaWxsOiM3MjcyNzI7fQoJLlllbGxvd3tmaWxsOiNGRkIxMTU7fQoJLlJlZHtmaWxsOiNEMTFD
+        MUM7fQo8L3N0eWxlPg0KICA8ZyBpZD0iU3VubnkiPg0KICAgIDxyZWN0IHg9IjAiIHk9IjE0IiB3aWR0
+        aD0iNiIgaGVpZ2h0PSIyIiBjbGFzcz0iWWVsbG93IiAvPg0KICAgIDxyZWN0IHg9IjMuNSIgeT0iMjIu
+        NSIgd2lkdGg9IjYiIGhlaWdodD0iMiIgY2xhc3M9IlllbGxvdyIgdHJhbnNmb3JtPSJtYXRyaXgoMC43
+        MDcxLCAtMC43MDcxLCAwLjcwNzEsIDAuNzA3MSwgLTE0LjY5ODUsIDExLjQ4NTMpIiAvPg0KICAgIDxy
+        ZWN0IHg9IjUuNSIgeT0iMy41IiB3aWR0aD0iMiIgaGVpZ2h0PSI2IiBjbGFzcz0iWWVsbG93IiB0cmFu
+        c2Zvcm09Im1hdHJpeCgwLjcwNzEsIC0wLjcwNzEsIDAuNzA3MSwgMC43MDcxLCAtMi42OTg1LCA2LjUx
+        NDcpIiAvPg0KICAgIDxyZWN0IHg9IjE0IiB5PSIwIiB3aWR0aD0iMiIgaGVpZ2h0PSI2IiBjbGFzcz0i
+        WWVsbG93IiAvPg0KICAgIDxyZWN0IHg9IjIwLjUiIHk9IjUuNSIgd2lkdGg9IjYiIGhlaWdodD0iMiIg
+        Y2xhc3M9IlllbGxvdyIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxLCAtMC43MDcxLCAwLjcwNzEsIDAu
+        NzA3MSwgMi4yNzIxLCAxOC41MTQ3KSIgLz4NCiAgICA8cmVjdCB4PSIyMi41IiB5PSIyMC41IiB3aWR0
+        aD0iMiIgaGVpZ2h0PSI2IiBjbGFzcz0iWWVsbG93IiB0cmFuc2Zvcm09Im1hdHJpeCgwLjcwNzEsIC0w
+        LjcwNzEsIDAuNzA3MSwgMC43MDcxLCAtOS43Mjc5LCAyMy40ODUzKSIgLz4NCiAgICA8cmVjdCB4PSIx
+        NCIgeT0iMjQiIHdpZHRoPSIyIiBoZWlnaHQ9IjYiIGNsYXNzPSJZZWxsb3ciIC8+DQogICAgPHJlY3Qg
+        eD0iMjQiIHk9IjE0IiB3aWR0aD0iNiIgaGVpZ2h0PSIyIiBjbGFzcz0iWWVsbG93IiAvPg0KICAgIDxj
+        aXJjbGUgY3g9IjE1IiBjeT0iMTUiIHI9IjciIGNsYXNzPSJZZWxsb3ciIC8+DQogIDwvZz4NCjwvc3Zn
+        Pgs=
+</value>
+  </data>
   <data name="bbiNew.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v22.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIyLjEsIFZlcnNpb249MjIuMS4z

@@ -36,26 +36,17 @@ namespace RastreioCorreiosWindowsForms.UI
                 int clienteCheck = checkPacoteClientes.Checked ? 1 : 0;
                 string conteudoPacote = textoDescricao.Text;
                 var conteudoCaixaTexto = caixaTexto.Text;
-                var rastreios = conteudoCaixaTexto.Split("\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                var rastreios = (conteudoCaixaTexto.Split("\n\r".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)).ToList();
 
-                int itemAtual = 1;
 
-                //cadastro em massa dos pacotes
-                /*
-                Parallel.ForEach(rastreios, rastreio =>
-                {
-                    splashTelaCarregando.SetWaitFormDescription($"Salvando {itemAtual} de {rastreios.Count()} ");
-                    _ = crudPacotes.InserirPacote(rastreio, clienteCheck, conteudoPacote);
-                    itemAtual++;
-                });
-                */
+                var pacotesJaCadstrados = await crudPacotes.VerificarVariosPacotesCadastrados(rastreios);
 
-                foreach (string rastreio in rastreios)
-                {
-                    splashTelaCarregando.SetWaitFormDescription($"Salvando {itemAtual} de {rastreios.Count()} ");
-                    await crudPacotes.InserirPacote(rastreio, clienteCheck, conteudoPacote);
-                    itemAtual++;
-                }
+                var pacotesACadastrar = rastreios.Except(pacotesJaCadstrados).ToList();
+
+
+                if (pacotesACadastrar.Count() > 0 ) await crudPacotes.InserirVariosPacotes(pacotesACadastrar, clienteCheck, conteudoPacote);
+               
+                
 
                 if (splashTelaCarregando.IsSplashFormVisible)
                 {

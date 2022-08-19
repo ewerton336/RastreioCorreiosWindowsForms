@@ -31,6 +31,7 @@ namespace RastreioCorreiosWindowsForms.UI
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JanelaPrincipal));
             this.ribbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
+            this.botaoMudarTema = new DevExpress.XtraBars.BarButtonItem();
             this.bbiPrintPreview = new DevExpress.XtraBars.BarButtonItem();
             this.bbiNew = new DevExpress.XtraBars.BarButtonItem();
             this.bbiEdit = new DevExpress.XtraBars.BarButtonItem();
@@ -63,8 +64,10 @@ namespace RastreioCorreiosWindowsForms.UI
             // 
             // ribbonControl
             // 
+            this.ribbonControl.CaptionBarItemLinks.Add(this.botaoMudarTema);
             this.ribbonControl.ExpandCollapseItem.Id = 0;
             this.ribbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.botaoMudarTema,
             this.ribbonControl.ExpandCollapseItem,
             this.ribbonControl.SearchEditItem,
             this.bbiPrintPreview,
@@ -77,7 +80,7 @@ namespace RastreioCorreiosWindowsForms.UI
             this.barButtonItem4,
             this.barStaticItem1});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 24;
+            this.ribbonControl.MaxItemId = 25;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -86,6 +89,14 @@ namespace RastreioCorreiosWindowsForms.UI
             this.ribbonControl.Size = new System.Drawing.Size(1066, 158);
             this.ribbonControl.StatusBar = this.ribbonStatusBar1;
             this.ribbonControl.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
+            // 
+            // botaoMudarTema
+            // 
+            this.botaoMudarTema.Caption = "Tema Escuro";
+            this.botaoMudarTema.Id = 24;
+            this.botaoMudarTema.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("botaoMudarTema.ImageOptions.SvgImage")));
+            this.botaoMudarTema.Name = "botaoMudarTema";
+            this.botaoMudarTema.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.botaoMudarTema_ItemClick);
             // 
             // bbiPrintPreview
             // 
@@ -350,5 +361,6 @@ namespace RastreioCorreiosWindowsForms.UI
       
         private DevExpress.XtraSplashScreen.SplashScreenManager splashTelaCarregando;
         private System.ComponentModel.BackgroundWorker backgroundWorker;
+        private DevExpress.XtraBars.BarButtonItem botaoMudarTema;
     }
 }

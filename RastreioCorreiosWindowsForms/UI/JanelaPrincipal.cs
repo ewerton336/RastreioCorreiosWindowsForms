@@ -11,6 +11,8 @@ using RastreioCorreiosWindowsForms.DAO;
 using DevExpress.XtraGrid.Views.Grid;
 using RastreioCorreiosWindowsForms.Models;
 using System.Threading;
+using DevExpress.LookAndFeel;
+using RastreioCorreiosWindowsForms.Properties;
 
 namespace RastreioCorreiosWindowsForms.UI
 {
@@ -19,6 +21,7 @@ namespace RastreioCorreiosWindowsForms.UI
         private readonly CrudPacotes crudPacotesDao;
         private readonly BLL.ManterDadosAtualizados manterDadosAtualizados;
         private List<CodigosRastreio> listaAnterior = new List<CodigosRastreio>();
+        private bool modoEscuro = false;
         public JanelaPrincipal()
         {
 
@@ -38,7 +41,7 @@ namespace RastreioCorreiosWindowsForms.UI
             #region Manter Worker rodando em outra Thread
             Thread th = new Thread(new ThreadStart(backgroundWorker.RunWorkerAsync));
             th.Start();
-            #region
+            #endregion
             //backgroundWorker.RunWorkerAsync();
 
             // var teste = manterDadosAtualizados.RastrearApi(listaAnterior.First());
@@ -216,12 +219,29 @@ namespace RastreioCorreiosWindowsForms.UI
         {
             var teste = gridView.GetFocusedRow();
 
-
         }
 
         private void bbiEdit_ItemClick(object sender, ItemClickEventArgs e)
         {
 
         }
+
+        private void botaoMudarTema_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (!modoEscuro)
+            {
+                modoEscuro = true;
+                botaoMudarTema.Caption = "Modo claro";
+               // botaoMudarTema.ImageOptions.SvgImage = Resources
+                UserLookAndFeel.Default.SetSkinStyle(SkinStyle.Office2019Black);
+            }
+            else
+            {
+                modoEscuro = false;
+                botaoMudarTema.Caption = "Modo escuro";
+                UserLookAndFeel.Default.SetSkinStyle(SkinStyle.Office2019Colorful);
+            }
+        }
     }
 }
+

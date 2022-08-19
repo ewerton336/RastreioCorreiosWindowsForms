@@ -317,6 +317,7 @@
     <Compile Include="UI\TelaCarregando.Designer.cs">
       <DependentUpon>TelaCarregando.cs</DependentUpon>
     </Compile>
+    <Content Include="DDL\DDL-Banco.sql" />
     <Content Include="DDL\DDL.sql" />
     <Compile Include="Models\CodigosRastreio.cs" />
     <Compile Include="Models\Pacote.cs" />

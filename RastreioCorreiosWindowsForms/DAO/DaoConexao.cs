@@ -18,7 +18,7 @@ namespace RastreioCorreiosWindowsForms.DAO
             {
                 if (con == null || con.State != ConnectionState.Open)
                 {
-                    const string conectString = "Server=mysql.bateaquihost.com.br;Database=isangue_ewertondev;uid=isangue_ewertondev;pwd=ewertondev123!;";
+                    const string conectString = "Server=us-cdbr-east-06.cleardb.net;Database=heroku_0aa954f85b2a5b0;uid=bf1e68a41157c2;pwd=f69196af;";
                     MySqlConnection dbCon = new MySqlConnection();
                     dbCon.ConnectionString = conectString;
                     dbCon.Open();
