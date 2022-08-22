@@ -80,14 +80,10 @@ namespace RastreioCorreiosWindowsForms.DAO
                                       ,ENTREGUE
                                       ,PACOTE_DOS_CLIENTES
                                       ,CONTEUDO_PACOTE)
-                                        VALUES";
+                                        VALUES (@RASTREIOS,  0, @CLIENTE_CHECK, @CONTEUDOPACOTE)";
 
 
-                foreach (var item in rastreios)
-                {
-                    SQL += $", ({item}, 0, {clienteCheck}, {conteudoPacote})";
-                }
-
+               
                     var result = await DbConnection.ExecuteAsync(SQL, new { RASTREIOS = rastreios, CLIENTE_CHECK = clienteCheck, CONTEUDOPACOTE = conteudoPacote });
                     return result;
                

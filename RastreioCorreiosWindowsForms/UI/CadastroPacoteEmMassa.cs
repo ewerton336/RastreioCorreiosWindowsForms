@@ -44,8 +44,10 @@ namespace RastreioCorreiosWindowsForms.UI
                 var pacotesACadastrar = rastreios.Except(pacotesJaCadstrados).ToList();
 
 
-                if (pacotesACadastrar.Count() > 0 ) await crudPacotes.InserirVariosPacotes(pacotesACadastrar, clienteCheck, conteudoPacote);
-               
+                foreach (var pacote in pacotesACadastrar)
+                {
+                    await crudPacotes.InserirPacote(pacote, clienteCheck, conteudoPacote);
+                }               
                 
 
                 if (splashTelaCarregando.IsSplashFormVisible)
