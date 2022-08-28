@@ -98,12 +98,20 @@ namespace RastreioCorreiosWindowsForms.DAO
 
         public async Task EncerrarPacoteEntregue(int idPacote)
         {
-            string sql = @"UPDATE CORREIOS_RASTREAMENTO
+            try
+            {
+                string sql = @"UPDATE CORREIOS_RASTREAMENTO
                             SET ENTREGUE = 1
                             ,DATA_ENCERRAMENTO = SYSDATE()- interval '3' hour
                             WHERE ID = @ID";
-             await DbConnection.ExecuteAsync(sql, new { ID = idPacote });
-             DbConnection.Close();
+                await DbConnection.ExecuteAsync(sql, new { ID = idPacote });
+                DbConnection.Close();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public async Task AtualizarDescricaoRastreio(string codRastreio, string descricao)

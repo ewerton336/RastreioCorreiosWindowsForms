@@ -174,6 +174,11 @@ namespace RastreioCorreiosWindowsForms.UI
                             // se após rastrear o status for entregue, é adicionado na lista para enviar ao banco de dados
                             if (objeto.ENTREGUE)
                             {
+                                if (listaAtualizarBancoDeDados.Count > 10)
+                                {
+                                    _ = EncerrarPacotes(listaAtualizarBancoDeDados);
+                                    listaAtualizarBancoDeDados.Clear();
+                                }
                                 listaAtualizarBancoDeDados.Add(objeto);
                                 // await crudPacotesDao.EncerrarPacoteEntregue(objeto.ID);
                             }
@@ -200,6 +205,14 @@ namespace RastreioCorreiosWindowsForms.UI
             }
         }
 
+        private async Task EncerrarPacotes(List<CodigosRastreio> listaAtualizarBancoDeDados)
+        {
+            foreach (var item in listaAtualizarBancoDeDados)
+            {
+                await crudPacotesDao.EncerrarPacoteEntregue(item.ID);
+            }
+        }
+        
         private async Task<CodigosRastreio> RastrearPacote(CodigosRastreio objeto)
         {
             var rastreio = await manterDadosAtualizados.RastrearApi(objeto);

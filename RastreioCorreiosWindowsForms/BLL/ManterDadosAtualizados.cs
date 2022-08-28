@@ -56,7 +56,7 @@ namespace RastreioCorreiosWindowsForms.BLL
             if (respostaDisserializada.objetos.FirstOrDefault().eventos != null)
             {
                 descricao = respostaDisserializada.objetos.FirstOrDefault().eventos.FirstOrDefault().dtHrCriado.ToString();
-                descricao += respostaDisserializada.objetos.FirstOrDefault().eventos.FirstOrDefault().unidade.endereco.cidade;
+                descricao += " " + respostaDisserializada.objetos.FirstOrDefault().eventos.FirstOrDefault().unidade.endereco.cidade;
                 descricao += " / " + respostaDisserializada.objetos.FirstOrDefault().eventos.FirstOrDefault().unidade.endereco.uf;
                 descricao += " " + respostaDisserializada.objetos.FirstOrDefault().eventos.FirstOrDefault().descricao;
             }
