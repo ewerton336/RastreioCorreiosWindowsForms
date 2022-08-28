@@ -64,7 +64,7 @@ namespace RastreioCorreiosWindowsForms.BLL
             objeto.DESCRICAO_GERAL = descricao;
             objeto.ULTIMO_PROCESSAMENTO = DateTime.Now;
 
-            Task t = crudPacotesDao.AtualizarDescricaoRastreio(objeto.CODIGO_RASTREIO, descricao);
+            _ = crudPacotesDao.AtualizarDescricaoRastreio(objeto.CODIGO_RASTREIO, descricao);
 
             return objeto;
         }
