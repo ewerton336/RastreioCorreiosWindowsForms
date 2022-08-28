@@ -29,6 +29,7 @@ namespace RastreioCorreiosWindowsForms.UI
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CadastroPacoteEmMassa));
             this.caixaTexto = new System.Windows.Forms.TextBox();
             this.botaoCadastrar = new System.Windows.Forms.Button();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
@@ -111,8 +112,9 @@ namespace RastreioCorreiosWindowsForms.UI
             this.Controls.Add(this.labelControl1);
             this.Controls.Add(this.botaoCadastrar);
             this.Controls.Add(this.caixaTexto);
+            this.IconOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("CadastroPacoteEmMassa.IconOptions.SvgImage")));
             this.Name = "CadastroPacoteEmMassa";
-            this.Text = "CadastroPacoteEmMassa";
+            this.Text = "Cadastro de Pacotes em lote";
             ((System.ComponentModel.ISupportInitialize)(this.checkPacoteClientes.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

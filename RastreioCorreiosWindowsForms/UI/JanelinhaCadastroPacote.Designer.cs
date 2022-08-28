@@ -29,6 +29,7 @@ namespace RastreioCorreiosWindowsForms.UI
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JanelinhaCadastroPacote));
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -105,8 +106,9 @@ namespace RastreioCorreiosWindowsForms.UI
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
+            this.IconOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("JanelinhaCadastroPacote.IconOptions.SvgImage")));
             this.Name = "JanelinhaCadastroPacote";
-            this.Text = "JanelinhaCadastro";
+            this.Text = "Cadastrar novo Pacote";
             ((System.ComponentModel.ISupportInitialize)(this.checkCliente.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
