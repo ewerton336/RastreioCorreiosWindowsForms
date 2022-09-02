@@ -41,9 +41,13 @@ namespace RastreioCorreiosWindowsForms.UI
             this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
             this.barStaticItem1 = new DevExpress.XtraBars.BarStaticItem();
+            this.lookupIntervaloExecucao = new DevExpress.XtraBars.BarEditItem();
+            this.repositoryItemLookUpEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.repositoryItemButtonEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.ribbonStatusBar1 = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.bsiRecordsCount = new DevExpress.XtraBars.BarStaticItem();
             this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
@@ -58,6 +62,8 @@ namespace RastreioCorreiosWindowsForms.UI
             this.splashTelaCarregando = new DevExpress.XtraSplashScreen.SplashScreenManager(this, typeof(global::RastreioCorreiosWindowsForms.UI.TelaCarregando), true, true, true);
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemLookUpEdit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl)).BeginInit();
             this.SuspendLayout();
@@ -78,12 +84,16 @@ namespace RastreioCorreiosWindowsForms.UI
             this.barButtonItem1,
             this.barButtonItem3,
             this.barButtonItem4,
-            this.barStaticItem1});
+            this.barStaticItem1,
+            this.lookupIntervaloExecucao});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 25;
+            this.ribbonControl.MaxItemId = 27;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
+            this.ribbonControl.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemButtonEdit1,
+            this.repositoryItemLookUpEdit1});
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.Office2013;
             this.ribbonControl.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.False;
             this.ribbonControl.Size = new System.Drawing.Size(1066, 158);
@@ -170,11 +180,29 @@ namespace RastreioCorreiosWindowsForms.UI
             this.barStaticItem1.Id = 23;
             this.barStaticItem1.Name = "barStaticItem1";
             // 
+            // lookupIntervaloExecucao
+            // 
+            this.lookupIntervaloExecucao.Caption = "Intervalo de Execução: ";
+            this.lookupIntervaloExecucao.Edit = this.repositoryItemLookUpEdit1;
+            this.lookupIntervaloExecucao.EditWidth = 80;
+            this.lookupIntervaloExecucao.Id = 26;
+            this.lookupIntervaloExecucao.Name = "lookupIntervaloExecucao";
+            this.lookupIntervaloExecucao.EditValueChanged += new System.EventHandler(this.lookupIntervaloExecucao_EditValueChanged);
+            // 
+            // repositoryItemLookUpEdit1
+            // 
+            this.repositoryItemLookUpEdit1.AutoHeight = false;
+            this.repositoryItemLookUpEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemLookUpEdit1.Name = "repositoryItemLookUpEdit1";
+            this.repositoryItemLookUpEdit1.NullText = "5 Minutos";
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup2,
-            this.ribbonPageGroup1});
+            this.ribbonPageGroup1,
+            this.ribbonPageGroup3});
             this.ribbonPage1.MergeOrder = 0;
             this.ribbonPage1.Name = "ribbonPage1";
             this.ribbonPage1.Text = "Início";
@@ -199,6 +227,19 @@ namespace RastreioCorreiosWindowsForms.UI
             this.ribbonPageGroup1.ItemLinks.Add(this.botaoAtualizar);
             this.ribbonPageGroup1.Name = "ribbonPageGroup1";
             this.ribbonPageGroup1.Text = "Tasks";
+            // 
+            // ribbonPageGroup3
+            // 
+            this.ribbonPageGroup3.ItemLinks.Add(this.lookupIntervaloExecucao);
+            this.ribbonPageGroup3.Name = "ribbonPageGroup3";
+            this.ribbonPageGroup3.Text = "ribbonPageGroup3";
+            // 
+            // repositoryItemButtonEdit1
+            // 
+            this.repositoryItemButtonEdit1.AutoHeight = false;
+            this.repositoryItemButtonEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.repositoryItemButtonEdit1.Name = "repositoryItemButtonEdit1";
             // 
             // ribbonStatusBar1
             // 
@@ -238,6 +279,7 @@ namespace RastreioCorreiosWindowsForms.UI
             this.gridView.OptionsSelection.MultiSelect = true;
             this.gridView.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CellSelect;
             this.gridView.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.gridView_RowCellStyle);
+            this.gridView.DoubleClick += new System.EventHandler(this.gridView_DoubleClick);
             // 
             // ID
             // 
@@ -329,6 +371,8 @@ namespace RastreioCorreiosWindowsForms.UI
             this.StatusBar = this.ribbonStatusBar1;
             this.Text = "Rastreamento de Pacotes - Ewerton Guimarães";
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemLookUpEdit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl)).EndInit();
             this.ResumeLayout(false);
@@ -365,5 +409,9 @@ namespace RastreioCorreiosWindowsForms.UI
         private DevExpress.XtraSplashScreen.SplashScreenManager splashTelaCarregando;
         private System.ComponentModel.BackgroundWorker backgroundWorker;
         private DevExpress.XtraBars.BarButtonItem botaoMudarTema;
+        private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repositoryItemButtonEdit1;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup3;
+        private DevExpress.XtraBars.BarEditItem lookupIntervaloExecucao;
+        private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repositoryItemLookUpEdit1;
     }
 }

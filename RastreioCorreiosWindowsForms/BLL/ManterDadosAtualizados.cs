@@ -47,7 +47,7 @@ namespace RastreioCorreiosWindowsForms.BLL
 
         public async Task<Models.CodigosRastreio> RastrearApi (CodigosRastreio objeto)
         {
-            var result =await http.GetAsync(objeto.CODIGO_RASTREIO);
+            var result = await http.GetAsync(objeto.CODIGO_RASTREIO);
             var response = await result.Content.ReadAsStringAsync();
 
             var respostaDisserializada = JsonConvert.DeserializeObject<Models.CodigoRastreioApi.Root>(response);
@@ -68,5 +68,29 @@ namespace RastreioCorreiosWindowsForms.BLL
 
             return objeto;
         }
+
+        public async Task<Models.CodigosRastreio> ConsultarPacoteApi(CodigosRastreio objeto)
+        {
+            var result = await http.GetAsync(objeto.CODIGO_RASTREIO);
+            var response = await result.Content.ReadAsStringAsync();
+
+            var respostaDisserializada = JsonConvert.DeserializeObject<Models.CodigoRastreioApi.Root>(response);
+
+            var descricao = "";
+            if (respostaDisserializada.objetos.FirstOrDefault().eventos != null)
+            {
+                descricao = respostaDisserializada.objetos.FirstOrDefault().eventos.FirstOrDefault().dtHrCriado.ToString();
+                descricao += " " + respostaDisserializada.objetos.FirstOrDefault().eventos.FirstOrDefault().unidade.endereco.cidade;
+                descricao += " / " + respostaDisserializada.objetos.FirstOrDefault().eventos.FirstOrDefault().unidade.endereco.uf;
+                descricao += " " + respostaDisserializada.objetos.FirstOrDefault().eventos.FirstOrDefault().descricao;
+            }
+
+            objeto.DESCRICAO_GERAL = descricao;
+            objeto.ULTIMO_PROCESSAMENTO = DateTime.Now;
+
+
+            return objeto;
+        }
+
     }
 }

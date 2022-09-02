@@ -22,6 +22,7 @@ namespace RastreioCorreiosWindowsForms.UI
         private readonly BLL.ManterDadosAtualizados manterDadosAtualizados;
         private List<CodigosRastreio> listaAnterior = new List<CodigosRastreio>();
         private bool modoEscuro = false;
+        private int intervaloExecucao = 300000;
         public JanelaPrincipal()
         {
 
@@ -42,9 +43,23 @@ namespace RastreioCorreiosWindowsForms.UI
             Thread th = new Thread(new ThreadStart(backgroundWorker.RunWorkerAsync));
             th.Start();
             #endregion
-            //backgroundWorker.RunWorkerAsync();
 
-            // var teste = manterDadosAtualizados.RastrearApi(listaAnterior.First());
+            //dicionario de intervalo de execução com tempo em milissegudos
+            #region carregar dados na combobox de intervalo de execução
+            Dictionary<int, string> ListaIntervaloExecucao = new Dictionary<int, string>
+            {
+                {1000, "1 segundo"},
+                {10000,"10 segundos" },
+                {30000, "30 segundos" },
+                {60000, "1 minuto" },
+                {300000, "5 minutos" },
+                {600000, "10 minutos" },
+            };
+
+
+            // atribuir dicionário a lista da combobox de intervalo de execucao
+            repositoryItemLookUpEdit1.DataSource = ListaIntervaloExecucao;
+            #endregion
         }
 
         public async Task ObterDados()
@@ -168,7 +183,7 @@ namespace RastreioCorreiosWindowsForms.UI
                         {
                             if (objeto.ENTREGUE == true) continue;
                             var diferencaMinutos = DateTime.Now.Subtract(objeto.ULTIMO_PROCESSAMENTO);
-                            if (diferencaMinutos.TotalMinutes < 3) continue;
+                            if (diferencaMinutos.TotalMilliseconds < intervaloExecucao) continue;
                             objeto = await RastrearPacote(objeto);
 
                             // se após rastrear o status for entregue, é adicionado na lista para enviar ao banco de dados
@@ -212,7 +227,7 @@ namespace RastreioCorreiosWindowsForms.UI
                 await crudPacotesDao.EncerrarPacoteEntregue(item.ID);
             }
         }
-        
+
         private async Task<CodigosRastreio> RastrearPacote(CodigosRastreio objeto)
         {
             var rastreio = await manterDadosAtualizados.RastrearApi(objeto);
@@ -245,7 +260,7 @@ namespace RastreioCorreiosWindowsForms.UI
             {
                 modoEscuro = true;
                 botaoMudarTema.Caption = "Modo claro";
-               // botaoMudarTema.ImageOptions.SvgImage = Resources
+                // botaoMudarTema.ImageOptions.SvgImage = Resources
                 UserLookAndFeel.Default.SetSkinStyle(SkinStyle.Office2019Black);
             }
             else
@@ -254,6 +269,17 @@ namespace RastreioCorreiosWindowsForms.UI
                 botaoMudarTema.Caption = "Modo escuro";
                 UserLookAndFeel.Default.SetSkinStyle(SkinStyle.Office2019Colorful);
             }
+        }
+
+        private void gridView_DoubleClick(object sender, EventArgs e)
+        {
+            // comando ao ativar 2 vezes em um rastreio dentro do 
+        }
+
+        private void lookupIntervaloExecucao_EditValueChanged(object sender, EventArgs e)
+        {
+            intervaloExecucao = (int)lookupIntervaloExecucao.EditValue;
+
         }
     }
 }
